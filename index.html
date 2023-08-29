@@ -27,14 +27,14 @@
                       componentName,
                       componentAttributes,
                       targetElement,
-                        function(cmp){
-                                        $A.eventService.addHandler({
-                                          event: 'force:showToast',
-                                          handler: function(event) { 
-                                            console.log('EVENTO')
-                                          }})
-                                          
-                      }
+                      $A.eventService.addHandler({
+                        event: 'force:showToast',
+                        handler: function(event) {
+                            console.log('Evento force:showToast capturado.');
+                            console.log('Título:', event.getParam("title"));
+                            console.log('Mensaje:', event.getParam("message"));
+                        }
+                    });
               );
             },
             lightningEndpoint
@@ -44,7 +44,10 @@
     console.log(event.detail);  // Aquí obtienes los detalles enviados desde el LWC
     // Ahora puedes hacer lo que necesites con el evento
   });
-
+  window.addEventListener('force:showToast', function(event) {
+    console.log('ENTRANDO por aqui');  // Aquí obtienes los detalles enviados desde el LWC
+    // Ahora puedes hacer lo que necesites con el evento
+  });
 
 
   </script>
