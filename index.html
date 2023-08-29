@@ -27,8 +27,13 @@
                       componentName,
                       componentAttributes,
                       targetElement,
-                      function (cmp){
-                        console.log('lightning component created');
+                        function(cmp){
+                                        $A.eventService.addHandler({
+                                          event: 'force:showToast',
+                                          handler: function(event) { 
+                                            console.log('EVENTO')
+                                          }})
+                                          
                       }
               );
             },
