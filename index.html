@@ -20,14 +20,16 @@
     };
 
     $Lightning.use(
-            appName,
-            function (){
-              console.log('APP Created');
-              $Lightning.createComponent(
-                      componentName,
-                      componentAttributes,
-                      targetElement,
-                      $A.eventService.addHandler({
+        appName,
+        function() {
+            console.log('APP Created');
+            $Lightning.createComponent(
+                componentName,
+                componentAttributes,
+                targetElement,
+                function(cmp) {
+                    // Manejador para el evento force:showToast
+                    $A.eventService.addHandler({
                         event: 'force:showToast',
                         handler: function(event) {
                             console.log('Evento force:showToast capturado.');
@@ -35,11 +37,11 @@
                             console.log('Mensaje:', event.getParam("message"));
                         }
                     });
-              );
-            },
-            lightningEndpoint
+                }
+            );
+        },
+        lightningEndpoint
     );
-
    window.addEventListener('forwardedcustomevent', function(event) {
     console.log(event.detail);  // Aquí obtienes los detalles enviados desde el LWC
     // Ahora puedes hacer lo que necesites con el evento
