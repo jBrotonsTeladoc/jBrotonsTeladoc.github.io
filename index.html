@@ -29,16 +29,16 @@
                       targetElement,
                       function (cmp){
                         console.log('lightning component created');
-                        $A.eventService.addHandler({ "event": componentName, "handler": retriveEventData });
                       }
               );
             },
             lightningEndpoint
     );
 
-    function retriveEventData(event) {
-            console.log(JSON.stringify(event))
-        }
+   window.addEventListener('forwardedcustomevent', function(event) {
+    console.log(event.detail);  // Aquí obtienes los detalles enviados desde el LWC
+    // Ahora puedes hacer lo que necesites con el evento
+  });
 
 
 
