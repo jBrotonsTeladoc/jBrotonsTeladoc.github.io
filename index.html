@@ -51,6 +51,11 @@
     // Ahora puedes hacer lo que necesites con el evento
   });
 
+     document.addEventListener('lightning__showtoast', event => {
+        console.log('TOAST');
+        console.log(event.detail);
+    });
+
 
   </script>
 
