@@ -34,12 +34,9 @@
         lightningEndpoint
     );
 
-     document.addEventListener('lightning__showtoast', event => {
-        console.log('TOAST');
-        console.log(event.detail);
-        console.log(JSON.stringify(event));
-        console.log(event.getParams());
-    });
+    document.addEventListener('my-custom-event', function (event) {
+  	console.log(event.detail);
+  });
 
 
   </script>
