@@ -35,11 +35,9 @@
     );
 
     document.addEventListener('saved-event', function (event) {
-  	  console.log('SAVED');
       window.location.href = "/";
     });
     document.addEventListener('cancel-event', function (event) {
-  	  console.log('CANCEL');
       window.history.go(-1); 
       return false;
     });
