@@ -75,7 +75,7 @@ function initiateChat(sessionData) {
     .then(response => {
         sequence++;
         console.log('Resultado de initiateChat:', response); // Agregado console.log
-        setInterval(receiveSFMessages, 1000);
+        setInterval(receiveSFMessages, 5000);
     })
     .catch(error => console.error('Error al iniciar chat:', error));
 }
