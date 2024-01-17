@@ -17,8 +17,8 @@ body {
 }
 #userMessage {
     width: 65%;
-}
-#messageBox{
+    padding-right: 32px;
+}z
     padding-top: 12px;
 }
 .message {
