@@ -1,5 +1,5 @@
 const liveAgentEndpoint = 'https://d.la4-c1cs-ia5.salesforceliveagent.com/chat/rest/'; // Reemplaza con tu endpoint
-const liveAgentVersion = '34'; // La versión de la API de Live Agent
+const liveAgentVersion = '60'; // La versión de la API de Live Agent
 
 getSessionId();
 
