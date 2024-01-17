@@ -17,7 +17,7 @@ function sendMessage() {
 
     console.log(message)
     chatBox.appendChild(messageDiv);
-    sendMessage(message);
+    sendMessageSF(message);
 
     // Limpiar el campo de entrada después de enviar
     document.getElementById("userMessage").value = "";
@@ -79,7 +79,7 @@ function initiateChat(sessionData) {
     .catch(error => console.error('Error al iniciar chat:', error));
 }
 
-function sendMessage(message) {
+function sendMessageSF(message) {
     const chatInitUrl = `${liveAgentEndpoint}Chasitor/ChatMessage`; // Reemplaza 'hostname' con tu endpoint real
     const headers = {
         'X-LIVEAGENT-API-VERSION': liveAgentVersion, // Reemplaza con tu versión de API
