@@ -52,7 +52,9 @@ function initiateChat(sessionData) {
         prechatDetails: [],
         prechatEntities: [],
         receiveQueueUpdates: true,
-        isPost: true
+        isPost: true,
+        language: "en-US",
+        screenResolution: "2560x1440"
     };
 
     fetch(chatInitUrl, {
