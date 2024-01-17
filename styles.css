@@ -32,3 +32,14 @@ body {
     max-width: 20%;
     margin-left: auto;
 }
+
+.messageSF {
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 10px;
+    color: white;
+    background-color: #A9A9A9; /* Color grisáceo */
+    text-align: left;
+    max-width: 20%;
+    margin-left: 0; /* Alineación a la izquierda */
+}
