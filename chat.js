@@ -91,6 +91,7 @@ function sendMessage(message) {
     const bodyMessage = {
         text: message
     };
+    console.log(bodyMessage)
 
     fetch(chatInitUrl, {
         method: 'POST',
