@@ -35,7 +35,7 @@ function getSessionId() {
 }
 
 function initiateChat(sessionData) {
-    const chatInitUrl = 'https://hostname/chat/rest/Chasitor/ChasitorInit'; // Reemplaza 'hostname' con tu endpoint real
+    const chatInitUrl = `${liveAgentEndpoint}Chasitor/ChasitorInit`; // Reemplaza 'hostname' con tu endpoint real
     const headers = {
         'X-LIVEAGENT-API-VERSION': liveAgentVersion, // Reemplaza con tu versión de API
         'X-LIVEAGENT-AFFINITY': sessionData.affinityToken, // Reemplaza con tu token de afinidad obtenido de la respuesta de SessionId
