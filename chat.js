@@ -54,7 +54,8 @@ function initiateChat(sessionData) {
         receiveQueueUpdates: true,
         isPost: true,
         language: "en-US",
-        screenResolution: "2560x1440"
+        screenResolution: "2560x1440",
+        doFallback: false
     };
 
     fetch(chatInitUrl, {
