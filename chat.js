@@ -22,7 +22,8 @@ function getSessionId() {
     const url = `${liveAgentEndpoint}System/SessionId`;
     const headers = {
         'X-LIVEAGENT-API-VERSION': liveAgentVersion,
-        'X-LIVEAGENT-AFFINITY': 'null'
+        'X-LIVEAGENT-AFFINITY': 'null',
+        'Access-Control-Allow-Origin': '*'
     };
 
     fetch(url, { headers: headers, method: 'GET' })
