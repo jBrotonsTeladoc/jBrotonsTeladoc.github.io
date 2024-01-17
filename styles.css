@@ -13,9 +13,10 @@ body {
     border: 1px solid #ccc;
     padding: 10px;
     background-color: #f9f9f9;
+    width: 70%;
 }
 #userMessage {
-    width: 80%;
+    width: 65%;
 }
 .message {
     padding: 5px 10px;
