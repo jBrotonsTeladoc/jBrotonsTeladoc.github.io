@@ -15,6 +15,8 @@ function sendMessage() {
     messageDiv.classList.add("message");
     messageDiv.textContent = message;
 
+
+    sendMessage(message);
     chatBox.appendChild(messageDiv);
 
     // Limpiar el campo de entrada después de enviar
@@ -77,3 +79,27 @@ function initiateChat(sessionData) {
     .catch(error => console.error('Error al iniciar chat:', error));
 }
 
+function sendMessage(message) {
+    const chatInitUrl = `${liveAgentEndpoint}Chasitor/ChatMessage`; // Reemplaza 'hostname' con tu endpoint real
+    const headers = {
+        'X-LIVEAGENT-API-VERSION': liveAgentVersion, // Reemplaza con tu versión de API
+        'X-LIVEAGENT-AFFINITY': affinityToken, // Reemplaza con tu token de afinidad obtenido de la respuesta de SessionId
+        'X-LIVEAGENT-SESSION-KEY': sessionKey, // Reemplaza con tu clave de sesión obtenida de la respuesta de SessionId
+        'X-LIVEAGENT-SEQUENCE': sequence// Puede empezar desde 1 y aumentar con cada solicitud
+    };
+    
+    const bodyMessage = {
+        text: message
+    };
+
+    fetch(chatInitUrl, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(bodyMessage)
+    })
+    .then(response => {
+        sequence++;
+        console.log('Resultado de mensaje:', response); // Agregado console.log
+    })
+    .catch(error => console.error('Error al iniciar chat:', error));
+}
