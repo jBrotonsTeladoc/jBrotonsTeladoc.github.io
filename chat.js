@@ -132,7 +132,8 @@ function exitChat(){
     };
     fetch(chatInitUrl, {
         method: 'POST',
-        headers: headers
+        headers: headers,
+        body: JSON.stringify({reason: "client"})
     })
     .then(response => {
         sequence++;
