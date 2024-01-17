@@ -64,7 +64,7 @@ function initiateChat(sessionData) {
         body: JSON.stringify(chatInitData)
     })
     .then(response => {
-        // Maneja la respuesta de inicio de chat aquí
+        console.log('Resultado de initiateChat:', response); // Agregado console.log
     })
     .catch(error => console.error('Error al iniciar chat:', error));
 }
