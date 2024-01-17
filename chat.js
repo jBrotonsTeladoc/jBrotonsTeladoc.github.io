@@ -75,6 +75,7 @@ function initiateChat(sessionData) {
     .then(response => {
         sequence++;
         console.log('Resultado de initiateChat:', response); // Agregado console.log
+        setInterval(receiveSFMessages, 1000);
     })
     .catch(error => console.error('Error al iniciar chat:', error));
 }
@@ -103,4 +104,19 @@ function sendMessageSF(message) {
         console.log('Resultado de mensaje:', response); // Agregado console.log
     })
     .catch(error => console.error('Error al iniciar chat:', error));
+}
+
+function receiveSFMessages(){
+    const chatInitUrl = `${liveAgentEndpoint}System/Messages`; // Reemplaza 'hostname' con tu endpoint real
+    const headers = {
+        'X-LIVEAGENT-API-VERSION': liveAgentVersion, // Reemplaza con tu versión de API
+        'X-LIVEAGENT-AFFINITY': affinityToken, // Reemplaza con tu token de afinidad obtenido de la respuesta de SessionId
+        'X-LIVEAGENT-SESSION-KEY': sessionKey, // Reemplaza con tu clave de sesión obtenida de la respuesta de SessionId
+    };
+    fetch(url, { headers: headers, method: 'GET' })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Resultado de mensaje:', data); // Agregado console.log
+        })
+        .catch(error => console.error('Error al obtener el mensaje de sesión:', error));
 }
