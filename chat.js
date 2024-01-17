@@ -54,7 +54,7 @@ function initiateChat(sessionData) {
     const chatInitData = {
         organizationId: "00D8J0000008gU0",
         deploymentId: "5728J000000004l",
-        buttonId: "5738J000000005A",
+        buttonId: "5738J0000000055",
         sessionId: sessionId,
         visitorName: "John Doe",
         prechatDetails: [],
