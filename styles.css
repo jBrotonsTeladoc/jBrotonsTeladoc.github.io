@@ -1,0 +1,20 @@
+#chatBox {
+    height: 90vh;
+    overflow: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+#userMessage {
+    width: 80%;
+}
+.message {
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 10px;
+    color: white;
+    background-color: green;
+    text-align: right;
+    max-width: 60%;
+    margin-left: auto;
+}

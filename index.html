@@ -1,48 +1,16 @@
-
-
+<!DOCTYPE html>
 <html>
+  <head>
+      <link rel="stylesheet" type="text/css" href="styles.css">
+  </head>
+  <body>
 
-<script src="https://teladoc-service.my.site.com/lightning/lightning.out.js"></script>
-<link rel="stylesheet" href="https://www.lightningdesignsystem.com/assets/styles/salesforce-lightning-design-system.min.css">
+    <div id="chatBox"></div>
 
+    <input type="text" id="userMessage" />
+    <button onclick="sendMessage()">Send</button>
 
-<div data-lightning-out="true"></div>
+    <script src="chat.js"></script>
 
-  <script>
-
-    const appName = 'c:MentalHealthSubmission';
-    const componentName = 'c:mentalHealthSubmissionLWC';
-    const lightningEndpoint = 'https://teladoc-service.my.site.com/mhsubmission';
-    const targetElement = document.querySelector("[data-lightning-out]");
-    const componentAttributes = {
-
-    };
-
-    $Lightning.use(
-        appName,
-        function() {
-            console.log('APP Created');
-            $Lightning.createComponent(
-                componentName,
-                componentAttributes,
-                targetElement,
-                function(cmp) {
-                }
-            );
-        },
-        lightningEndpoint
-    );
-
-    document.addEventListener('saved-event', function (event) {
-      window.location.href = "/";
-    });
-    document.addEventListener('cancel-event', function (event) {
-      window.history.go(-1); 
-      return false;
-    });
-
-
-  </script>
-
-
+  </body>
 </html>
