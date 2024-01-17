@@ -29,6 +29,40 @@ function getSessionId() {
         .then(response => response.json())
         .then(data => {
             console.log('Resultado de getSessionId:', data); // Agregado console.log
+            initiateChat(data);
         })
         .catch(error => console.error('Error al obtener el ID de sesión:', error));
 }
+
+function initiateChat(sessionData) {
+    const chatInitUrl = 'https://hostname/chat/rest/Chasitor/ChasitorInit'; // Reemplaza 'hostname' con tu endpoint real
+    const headers = {
+        'X-LIVEAGENT-API-VERSION': liveAgentVersion, // Reemplaza con tu versión de API
+        'X-LIVEAGENT-AFFINITY': sessionData.affinityToken, // Reemplaza con tu token de afinidad obtenido de la respuesta de SessionId
+        'X-LIVEAGENT-SESSION-KEY': sessionData.key, // Reemplaza con tu clave de sesión obtenida de la respuesta de SessionId
+        'X-LIVEAGENT-SEQUENCE': 1 // Puede empezar desde 1 y aumentar con cada solicitud
+    };
+
+    const chatInitData = {
+        organizationId: "00D8J0000008gU0",
+        deploymentId: "5728J000000004l",
+        buttonId: "5738J000000005A",
+        sessionId: sessionData.id,
+        visitorName: "John Doe",
+        prechatDetails: [],
+        prechatEntities: [],
+        receiveQueueUpdates: true,
+        isPost: true
+    };
+
+    fetch(chatInitUrl, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(chatInitData)
+    })
+    .then(response => {
+        // Maneja la respuesta de inicio de chat aquí
+    })
+    .catch(error => console.error('Error al iniciar chat:', error));
+}
+
