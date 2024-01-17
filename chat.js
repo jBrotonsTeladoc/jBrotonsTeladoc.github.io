@@ -121,6 +121,25 @@ async function receiveSFMessages(){
         })
         .catch(error => console.error('Error al obtener el mensaje de sesión:', error));
 }
+
+function exitChat(){ 
+    const chatInitUrl = `${liveAgentEndpoint}Chasitor/ChatEnd`; // Reemplaza 'hostname' con tu endpoint real
+    const headers = {
+        'X-LIVEAGENT-API-VERSION': liveAgentVersion, // Reemplaza con tu versión de API
+        'X-LIVEAGENT-AFFINITY': affinityToken, // Reemplaza con tu token de afinidad obtenido de la respuesta de SessionId
+        'X-LIVEAGENT-SESSION-KEY': sessionKey, // Reemplaza con tu clave de sesión obtenida de la respuesta de SessionId
+        'X-LIVEAGENT-SEQUENCE': sequence// Puede empezar desde 1 y aumentar con cada solicitud
+    };
+    fetch(chatInitUrl, {
+        method: 'POST',
+        headers: headers
+    })
+    .then(response => {
+        sequence++;
+        console.log('Resultado de cerrarChat:', response); // Agregado console.log
+    })
+    .catch(error => console.error('Error al iniciar chat:', error));
+}
 receiveSFMessages();
 
 function sleep(ms) {
