@@ -15,9 +15,9 @@ function sendMessage() {
     messageDiv.classList.add("message");
     messageDiv.textContent = message;
 
-
-    sendMessage(message);
+    console.log(message)
     chatBox.appendChild(messageDiv);
+    sendMessage(message);
 
     // Limpiar el campo de entrada después de enviar
     document.getElementById("userMessage").value = "";
