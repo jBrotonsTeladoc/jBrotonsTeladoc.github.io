@@ -79,4 +79,4 @@ function sendMessage() {
 
 
 // Inicia el proceso
-getSessionId();
+//getSessionId();
