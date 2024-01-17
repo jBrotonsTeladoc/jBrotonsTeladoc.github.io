@@ -25,7 +25,7 @@ function getSessionId() {
         'X-LIVEAGENT-AFFINITY': 'null'
     };
 
-    fetch(url, { headers: headers })
+    fetch(url, { headers: headers, method: 'GET' })
         .then(response => response.json())
         .then(data => {
             console.log('Resultado de getSessionId:', data); // Agregado console.log
