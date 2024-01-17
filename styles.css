@@ -1,3 +1,12 @@
+@font-face {
+    font-family: 'DMSans';
+    src: url('DMSans-VariableFont_opsz,wght.ttf') format('truetype');
+}
+
+body {
+    font-family: 'DMSans', sans-serif;
+}
+
 #chatBox {
     height: 90vh;
     overflow: auto;
@@ -13,7 +22,7 @@
     margin: 5px;
     border-radius: 10px;
     color: white;
-    background-color: green;
+    background-color: #63cb77;
     text-align: right;
     max-width: 60%;
     margin-left: auto;
