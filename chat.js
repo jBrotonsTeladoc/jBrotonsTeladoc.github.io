@@ -107,7 +107,7 @@ function sendMessageSF(message) {
 }
 
 function receiveSFMessages(){
-    const chatInitUrl = `${liveAgentEndpoint}System/Messages`; // Reemplaza 'hostname' con tu endpoint real
+    const url = `${liveAgentEndpoint}System/Messages`; // Reemplaza 'hostname' con tu endpoint real
     const headers = {
         'X-LIVEAGENT-API-VERSION': liveAgentVersion, // Reemplaza con tu versión de API
         'X-LIVEAGENT-AFFINITY': affinityToken, // Reemplaza con tu token de afinidad obtenido de la respuesta de SessionId
