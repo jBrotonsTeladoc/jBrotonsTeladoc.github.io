@@ -55,6 +55,7 @@ function initiateChat(sessionData) {
         isPost: true,
         language: "en-US",
         screenResolution: "2560x1440",
+        userAgent: navigator.userAgent,
         doFallback: false
     };
 
