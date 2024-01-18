@@ -46,12 +46,10 @@ function apiCall(url, method, body = null) {
         body: body ? JSON.stringify(body) : undefined
     })
     .then(response => {
-        const contentType = response.headers.get("content-type");
-        console.log('contentType: ', contentType)
-        if (contentType && contentType.includes("application/json")) {
+        try {
             return response.json();
-        } else {
-            return response.text(); // o simplemente `return response;` si prefieres manejar la respuesta cruda
+        } catch (e) {
+            return response;
         }
     });
 }
