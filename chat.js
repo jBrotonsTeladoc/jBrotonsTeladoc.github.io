@@ -102,7 +102,7 @@ function initiateChat() {
 
 function sendMessageSF(message) {
     const chatInitUrl = `${liveAgentEndpoint}Chasitor/ChatMessage`;
-    apiCall(chatInitUrl, 'POST', {text: message})
+    apiCallText(chatInitUrl, 'POST', {text: message})
         .then(response => {
             sequence++;
             console.log('Resultado de mensaje:', response);
