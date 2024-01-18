@@ -1,11 +1,32 @@
-const liveAgentEndpoint = 'https://d.la4-c1cs-ia5.salesforceliveagent.com/chat/rest/';
-const liveAgentVersion = '60';
-let sequence = 0;
-let affinityToken = null;
-let sessionId = null;
-let sessionKey = null;
+const liveAgentEndpoint = 'https://d.la4-c1cs-ia5.salesforceliveagent.com/chat/rest/'; // Reemplaza con tu endpoint
+const liveAgentVersion = '60'; // La versión de la API de Live Agent
 
+sequence = 1;
+affinityToken = null;
+sessionId = null;
+sessionKey = null;
 getSessionId();
+receiveSFMessages();
+
+
+function newMessageInChat(classMessage, message){
+    var chatBox = document.getElementById("chatBox");
+    var messageDiv = document.createElement("div");
+    messageDiv.classList.add(classMessage);
+    messageDiv.textContent = message;
+    chatBox.appendChild(messageDiv);
+}
+
+function sendMessage() {
+    var message = document.getElementById("userMessage").value;
+    newMessageInChat("message", message)
+    sendMessageSF(message);
+    document.getElementById("userMessage").value = "";
+}
+
+function createSFChatMessage(message){
+    newMessageInChat("messageSF", message)
+}
 
 
 function createHeaders() {
@@ -25,16 +46,13 @@ function apiCall(url, method, body = null) {
         body: body ? JSON.stringify(body) : undefined
     })
     .then(response => {
-        sequence++;
         return response.json();
     });
 }
 
-// Las funciones sendMessage, receiveSFMessages, y createSFChatMessage permanecen iguales
-
 function getSessionId() {
     const url = `${liveAgentEndpoint}System/SessionId`;
-    apiCall(url, 'GET')
+    apiCall(url,'GET')
         .then(data => {
             affinityToken = data.affinityToken;
             sessionId = data.id;
@@ -46,7 +64,7 @@ function getSessionId() {
 }
 
 function initiateChat(sessionData) {
-    const chatInitUrl = `${liveAgentEndpoint}Chasitor/ChasitorInit`;
+    const chatInitUrl = `${liveAgentEndpoint}Chasitor/ChasitorInit`; 
     const chatInitData = {
         organizationId: "00D8J0000008gU0",
         deploymentId: "5728J000000004l",
@@ -62,25 +80,53 @@ function initiateChat(sessionData) {
         userAgent: navigator.userAgent,
         doFallback: false
     };
-
     apiCall(chatInitUrl, 'POST', chatInitData)
-        .then(response => {receiveSFMessages();console.log('Resultado de initiateChat:', response);})
+        .then(response => {
+            sequence++;
+            console.log('Resultado de initiateChat:', response);
+        })
         .catch(error => console.error('Error al iniciar chat:', error));
 }
 
 function sendMessageSF(message) {
-    const chatMessageUrl = `${liveAgentEndpoint}Chasitor/ChatMessage`;
-    const bodyMessage = { text: message };
-    console.log(bodyMessage)
-
-    apiCall(chatMessageUrl, 'POST', bodyMessage)
-        .then(response => console.log('Resultado de mensaje:', response))
-        .catch(error => console.error('Error al enviar mensaje:', error));
+    const chatInitUrl = `${liveAgentEndpoint}Chasitor/ChatMessage`;
+    apiCall(chatInitUrl, 'POST', {text: message})
+        .then(response => {
+            sequence++;
+            console.log('Resultado de mensaje:', response);
+        })
+        .catch(error => console.error('Error al iniciar chat:', error));
 }
 
-function exitChat() {
-    const chatEndUrl = `${liveAgentEndpoint}Chasitor/ChatEnd`;
-    apiCall(chatEndUrl, 'POST', {reason: "client"})
-        .then(response => console.log('Resultado de cerrarChat:', response))
-        .catch(error => console.error('Error al cerrar chat:', error));
+async function receiveSFMessages(){
+    await sleep(2000);
+    const url = `${liveAgentEndpoint}System/Messages`;
+    apiCall(url,'GET')
+        .then(data => {
+            console.log('Resultado de mensaje:', data);
+            if(data.messages.length > 0){
+                data.messages.forEach(element => {
+                    if(element.type == "ChatMessage" && element.message.text != ""){
+                        createSFChatMessage(element.message.text);
+                    }
+                });
+            }
+            receiveSFMessages();
+        })
+        .catch(error => console.error('Error al obtener el mensaje de sesión:', error));
 }
+
+function exitChat(){ 
+    const chatInitUrl = `${liveAgentEndpoint}Chasitor/ChatEnd`; // Reemplaza 'hostname' con tu endpoint real
+    apiCall(chatInitUrl, 'POST', {reason: "client"})
+        .then(response => {
+            sequence++;
+            console.log('Resultado de cerrarChat:', response); // Agregado console.log
+        })
+        .catch(error => console.error('Error al iniciar chat:', error));
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
