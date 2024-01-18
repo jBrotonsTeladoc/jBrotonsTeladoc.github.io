@@ -1,56 +1,52 @@
-const liveAgentEndpoint = 'https://d.la4-c1cs-ia5.salesforceliveagent.com/chat/rest/'; // Reemplaza con tu endpoint
-const liveAgentVersion = '60'; // La versión de la API de Live Agent
-sequence = 1;
-affinityToken = null;
-sessionId = null;
-sessionKey = null;
+const liveAgentEndpoint = 'https://d.la4-c1cs-ia5.salesforceliveagent.com/chat/rest/';
+const liveAgentVersion = '60';
+let sequence = 1;
+let affinityToken = null;
+let sessionId = null;
+let sessionKey = null;
+
 getSessionId();
 
 
-function sendMessage() {
-    var message = document.getElementById("userMessage").value;
-    var chatBox = document.getElementById("chatBox");
-    
-    var messageDiv = document.createElement("div");
-    messageDiv.classList.add("message");
-    messageDiv.textContent = message;
-
-    console.log(message)
-    chatBox.appendChild(messageDiv);
-    sendMessageSF(message);
-
-    // Limpiar el campo de entrada después de enviar
-    document.getElementById("userMessage").value = "";
+function createHeaders() {
+    return {
+        'X-LIVEAGENT-API-VERSION': liveAgentVersion,
+        'X-LIVEAGENT-AFFINITY': affinityToken || 'null',
+        'X-LIVEAGENT-SESSION-KEY': sessionKey,
+        'X-LIVEAGENT-SEQUENCE': sequence
+    };
 }
+
+function apiCall(url, method, body = null) {
+    const headers = createHeaders();
+    return fetch(url, {
+        method: method,
+        headers: headers,
+        body: body ? JSON.stringify(body) : undefined
+    })
+    .then(response => {
+        sequence++;
+        return response.json();
+    });
+}
+
+// Las funciones sendMessage, receiveSFMessages, y createSFChatMessage permanecen iguales
 
 function getSessionId() {
     const url = `${liveAgentEndpoint}System/SessionId`;
-    const headers = {
-        'X-LIVEAGENT-API-VERSION': liveAgentVersion,
-        'X-LIVEAGENT-AFFINITY': 'null'
-    };
-
-    fetch(url, { headers: headers, method: 'GET' })
-        .then(response => response.json())
+    apiCall(url, 'GET')
         .then(data => {
             affinityToken = data.affinityToken;
             sessionId = data.id;
             sessionKey = data.key;
-            console.log('Resultado de getSessionId:', data); // Agregado console.log
+            console.log('Resultado de getSessionId:', data);
             initiateChat(data);
         })
         .catch(error => console.error('Error al obtener el ID de sesión:', error));
 }
 
 function initiateChat(sessionData) {
-    const chatInitUrl = `${liveAgentEndpoint}Chasitor/ChasitorInit`; // Reemplaza 'hostname' con tu endpoint real
-    const headers = {
-        'X-LIVEAGENT-API-VERSION': liveAgentVersion, // Reemplaza con tu versión de API
-        'X-LIVEAGENT-AFFINITY': affinityToken, // Reemplaza con tu token de afinidad obtenido de la respuesta de SessionId
-        'X-LIVEAGENT-SESSION-KEY': sessionKey, // Reemplaza con tu clave de sesión obtenida de la respuesta de SessionId
-        'X-LIVEAGENT-SEQUENCE': sequence// Puede empezar desde 1 y aumentar con cada solicitud
-    };
-    
+    const chatInitUrl = `${liveAgentEndpoint}Chasitor/ChasitorInit`;
     const chatInitData = {
         organizationId: "00D8J0000008gU0",
         deploymentId: "5728J000000004l",
@@ -67,97 +63,24 @@ function initiateChat(sessionData) {
         doFallback: false
     };
 
-    fetch(chatInitUrl, {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(chatInitData)
-    })
-    .then(response => {
-        sequence++;
-        console.log('Resultado de initiateChat:', response); // Agregado console.log
-    })
-    .catch(error => console.error('Error al iniciar chat:', error));
+    apiCall(chatInitUrl, 'POST', chatInitData)
+        .then(response => {receiveSFMessages();console.log('Resultado de initiateChat:', response);})
+        .catch(error => console.error('Error al iniciar chat:', error));
 }
 
 function sendMessageSF(message) {
-    const chatInitUrl = `${liveAgentEndpoint}Chasitor/ChatMessage`; // Reemplaza 'hostname' con tu endpoint real
-    const headers = {
-        'X-LIVEAGENT-API-VERSION': liveAgentVersion, // Reemplaza con tu versión de API
-        'X-LIVEAGENT-AFFINITY': affinityToken, // Reemplaza con tu token de afinidad obtenido de la respuesta de SessionId
-        'X-LIVEAGENT-SESSION-KEY': sessionKey, // Reemplaza con tu clave de sesión obtenida de la respuesta de SessionId
-        'X-LIVEAGENT-SEQUENCE': sequence// Puede empezar desde 1 y aumentar con cada solicitud
-    };
-    
-    const bodyMessage = {
-        text: message
-    };
+    const chatMessageUrl = `${liveAgentEndpoint}Chasitor/ChatMessage`;
+    const bodyMessage = { text: message };
     console.log(bodyMessage)
 
-    fetch(chatInitUrl, {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(bodyMessage)
-    })
-    .then(response => {
-        sequence++;
-        console.log('Resultado de mensaje:', response); // Agregado console.log
-    })
-    .catch(error => console.error('Error al iniciar chat:', error));
+    apiCall(chatMessageUrl, 'POST', bodyMessage)
+        .then(response => console.log('Resultado de mensaje:', response))
+        .catch(error => console.error('Error al enviar mensaje:', error));
 }
 
-async function receiveSFMessages(){
-    await sleep(2000);
-    const url = `${liveAgentEndpoint}System/Messages`; // Reemplaza 'hostname' con tu endpoint real
-    const headers = {
-        'X-LIVEAGENT-API-VERSION': liveAgentVersion, // Reemplaza con tu versión de API
-        'X-LIVEAGENT-AFFINITY': affinityToken, // Reemplaza con tu token de afinidad obtenido de la respuesta de SessionId
-        'X-LIVEAGENT-SESSION-KEY': sessionKey, // Reemplaza con tu clave de sesión obtenida de la respuesta de SessionId
-    };
-    fetch(url, { headers: headers, method: 'GET' })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Resultado de mensaje:', data); // Agregado console.log
-            if(data.messages.length > 0){
-                data.messages.forEach(element => {
-                    if(element.type == "ChatMessage" && element.message.text != ""){
-                        createSFChatMessage(element.message.text);
-                    }
-                });
-            }
-            receiveSFMessages();
-        })
-        .catch(error => console.error('Error al obtener el mensaje de sesión:', error));
-}
-
-function exitChat(){ 
-    const chatInitUrl = `${liveAgentEndpoint}Chasitor/ChatEnd`; // Reemplaza 'hostname' con tu endpoint real
-    const headers = {
-        'X-LIVEAGENT-API-VERSION': liveAgentVersion, // Reemplaza con tu versión de API
-        'X-LIVEAGENT-AFFINITY': affinityToken, // Reemplaza con tu token de afinidad obtenido de la respuesta de SessionId
-        'X-LIVEAGENT-SESSION-KEY': sessionKey, // Reemplaza con tu clave de sesión obtenida de la respuesta de SessionId
-        'X-LIVEAGENT-SEQUENCE': sequence// Puede empezar desde 1 y aumentar con cada solicitud
-    };
-    fetch(chatInitUrl, {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify({reason: "client"})
-    })
-    .then(response => {
-        sequence++;
-        console.log('Resultado de cerrarChat:', response); // Agregado console.log
-    })
-    .catch(error => console.error('Error al iniciar chat:', error));
-}
-receiveSFMessages();
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-function createSFChatMessage(message){
-    var chatBox = document.getElementById("chatBox");
-    var messageDiv = document.createElement("div");
-    messageDiv.classList.add("messageSF");
-    messageDiv.textContent = message;
-    chatBox.appendChild(messageDiv);
+function exitChat() {
+    const chatEndUrl = `${liveAgentEndpoint}Chasitor/ChatEnd`;
+    apiCall(chatEndUrl, 'POST', {reason: "client"})
+        .then(response => console.log('Resultado de cerrarChat:', response))
+        .catch(error => console.error('Error al cerrar chat:', error));
 }
