@@ -46,11 +46,7 @@ function apiCall(url, method, body = null) {
         body: body ? JSON.stringify(body) : undefined
     })
     .then(response => {
-        try {
-            return response.json();
-        } catch (e) {
-            return response;
-        }
+        return response;
     });
 }
 
@@ -58,6 +54,7 @@ function getSessionId() {
     const url = `${liveAgentEndpoint}System/SessionId`;
     apiCall(url,'GET')
         .then(data => {
+            data = data.json();
             affinityToken = data.affinityToken;
             sessionId = data.id;
             sessionKey = data.key;
@@ -107,6 +104,7 @@ async function receiveSFMessages(){
     const url = `${liveAgentEndpoint}System/Messages`;
     apiCall(url,'GET')
         .then(data => {
+            data = data.json();
             console.log('Resultado de mensaje:', data);
             if(data.messages.length > 0){
                 data.messages.forEach(element => {
