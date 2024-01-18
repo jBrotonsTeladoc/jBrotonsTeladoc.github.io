@@ -46,7 +46,13 @@ function apiCall(url, method, body = null) {
         body: body ? JSON.stringify(body) : undefined
     })
     .then(response => {
-        return response.json();
+        const contentType = response.headers.get("content-type");
+        console.log('contentType: ', contentType)
+        if (contentType && contentType.includes("application/json")) {
+            return response.json();
+        } else {
+            return response.text(); // o simplemente `return response;` si prefieres manejar la respuesta cruda
+        }
     });
 }
 
@@ -63,7 +69,7 @@ function getSessionId() {
         .catch(error => console.error('Error al obtener el ID de sesión:', error));
 }
 
-function initiateChat(sessionData) {
+function initiateChat() {
     const chatInitUrl = `${liveAgentEndpoint}Chasitor/ChasitorInit`; 
     const chatInitData = {
         organizationId: "00D8J0000008gU0",
