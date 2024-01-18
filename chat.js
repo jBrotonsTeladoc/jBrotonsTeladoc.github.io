@@ -106,7 +106,7 @@ function sendMessageSF(message) {
 }
 
 async function receiveSFMessages(){
-    await sleep(5000);
+    await sleep(2000);
     const url = `${liveAgentEndpoint}System/Messages`; // Reemplaza 'hostname' con tu endpoint real
     const headers = {
         'X-LIVEAGENT-API-VERSION': liveAgentVersion, // Reemplaza con tu versión de API
@@ -118,11 +118,11 @@ async function receiveSFMessages(){
         .then(data => {
             console.log('Resultado de mensaje:', data); // Agregado console.log
             if(data.messages.length > 0){
-                var chatBox = document.getElementById("chatBox");
-                var messageDiv = document.createElement("div");
-                messageDiv.classList.add("messageSF");
-                messageDiv.textContent = data.messages[1].message.text;
-                chatBox.appendChild(messageDiv);
+                data.messages.array.forEach(element => {
+                    if(element.type == "ChatMessage" && element.message.text != ""){
+                        createSFChatMessage(element.message.text);
+                    }
+                });
             }
             receiveSFMessages();
         })
@@ -152,4 +152,12 @@ receiveSFMessages();
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function createSFChatMessage(message){
+    var chatBox = document.getElementById("chatBox");
+    var messageDiv = document.createElement("div");
+    messageDiv.classList.add("messageSF");
+    messageDiv.textContent = message;
+    chatBox.appendChild(messageDiv);
 }
