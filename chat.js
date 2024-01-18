@@ -83,7 +83,23 @@ function initiateChat() {
         buttonId: "5738J000000005A",
         sessionId: sessionId,
         visitorName: "John Doe",
-        prechatDetails: [],
+        prechatDetails: [{
+            label: "E-mail Address",
+            value: "jon@example.com",
+            entityFieldMaps: [
+               {
+                    entityName: "Contact",
+                    fieldName: "Email",
+                    isFastFillable: false,
+                    isAutoQueryable: true,
+                    isExactMatchable: true
+               }
+            ],
+            transcriptFields: [
+                    "c__EmailAddress"
+            ],
+            displayToAgent: true
+    }    ],
         prechatEntities: [],
         receiveQueueUpdates: true,
         isPost: true,
@@ -130,7 +146,7 @@ async function receiveSFMessages(){
 
 function exitChat(){ 
     const chatInitUrl = `${liveAgentEndpoint}Chasitor/ChatEnd`; // Reemplaza 'hostname' con tu endpoint real
-    apiCall(chatInitUrl, 'POST', {reason: "client"})
+    apiCallText(chatInitUrl, 'POST', {reason: "client"})
         .then(response => {
             sequence++;
             console.log('Resultado de cerrarChat:', response); // Agregado console.log
