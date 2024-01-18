@@ -117,6 +117,13 @@ async function receiveSFMessages(){
         .then(response => response.json())
         .then(data => {
             console.log('Resultado de mensaje:', data); // Agregado console.log
+            if(data.messages.length > 0){
+                var chatBox = document.getElementById("chatBox");
+                var messageDiv = document.createElement("div");
+                messageDiv.classList.add("messageSF");
+                messageDiv.textContent = data.messages[1].message.text;
+                chatBox.appendChild(messageDiv);
+            }
             receiveSFMessages();
         })
         .catch(error => console.error('Error al obtener el mensaje de sesión:', error));
