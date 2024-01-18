@@ -118,7 +118,7 @@ async function receiveSFMessages(){
         .then(data => {
             console.log('Resultado de mensaje:', data); // Agregado console.log
             if(data.messages.length > 0){
-                data.messages.array.forEach(element => {
+                data.messages.forEach(element => {
                     if(element.type == "ChatMessage" && element.message.text != ""){
                         createSFChatMessage(element.message.text);
                     }
