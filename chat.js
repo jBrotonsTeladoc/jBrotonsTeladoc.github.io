@@ -1,6 +1,6 @@
 const liveAgentEndpoint = 'https://d.la4-c1cs-ia5.salesforceliveagent.com/chat/rest/';
 const liveAgentVersion = '60';
-let sequence = 1;
+let sequence = 0;
 let affinityToken = null;
 let sessionId = null;
 let sessionKey = null;
