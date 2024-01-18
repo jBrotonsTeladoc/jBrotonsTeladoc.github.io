@@ -50,6 +50,18 @@ function apiCall(url, method, body = null) {
     });
 }
 
+function apiCallText(url, method, body = null) {
+    const headers = createHeaders();
+    return fetch(url, {
+        method: method,
+        headers: headers,
+        body: body ? JSON.stringify(body) : undefined
+    })
+    .then(response => {
+        return response.text();
+    });
+}
+
 function getSessionId() {
     const url = `${liveAgentEndpoint}System/SessionId`;
     apiCall(url,'GET')
@@ -80,7 +92,7 @@ function initiateChat() {
         userAgent: navigator.userAgent,
         doFallback: false
     };
-    apiCall(chatInitUrl, 'POST', chatInitData)
+    apiCallText(chatInitUrl, 'POST', chatInitData)
         .then(response => {
             sequence++;
             console.log('Resultado de initiateChat:', response);
