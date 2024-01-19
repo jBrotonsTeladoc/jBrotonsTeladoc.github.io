@@ -82,11 +82,11 @@ function initiateChat() {
         deploymentId: "5728J000000004l",
         buttonId: "5738J000000005A",
         sessionId: sessionId,
-        visitorName: "John Doe",
+        visitorName: "Konda Rama",
         prechatDetails: [
             {
             label: "Email",
-            value: "bsom@source.com",
+            value: "alexander.gimenez@teladochealth.com",
             transcriptFields: [
                     "c__EmailAddress"
             ],
