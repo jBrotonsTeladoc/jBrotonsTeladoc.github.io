@@ -85,7 +85,7 @@ function initiateChat() {
         visitorName: "John Doe",
         prechatDetails: [
             {
-            label: "E-mail Address",
+            label: "Email",
             value: "bsom@source.com",
             transcriptFields: [
                     "c__EmailAddress"
@@ -93,7 +93,7 @@ function initiateChat() {
             displayToAgent: true 
             },
             {
-                label: "Previous Conversation",
+                label: "Transcript",
                 value: "{ [ { text: 'Hello World', type: 'Bot' }, { text: 'Hello', type: 'user' }, { text: 'How are you?', type: 'user' }, { text: 'Im fine, thanks', type: 'Bot' }, { text: 'Whats your name?', type: 'user' }, { text: 'My name is Bot', type: 'Bot' } ] }",
                 transcriptFields: [
                         "c__Transcript"
