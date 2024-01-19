@@ -86,7 +86,7 @@ function initiateChat() {
         prechatDetails: [
             {
             label: "E-mail Address",
-            value: "jon@example.com",
+            value: "bsom@source.com",
             transcriptFields: [
                     "c__EmailAddress"
             ],
