@@ -83,23 +83,24 @@ function initiateChat() {
         buttonId: "5738J000000005A",
         sessionId: sessionId,
         visitorName: "John Doe",
-        prechatDetails: [{
+        prechatDetails: [
+            {
             label: "E-mail Address",
             value: "jon@example.com",
-            entityFieldMaps: [
-               {
-                    entityName: "Contact",
-                    fieldName: "Email",
-                    isFastFillable: false,
-                    isAutoQueryable: true,
-                    isExactMatchable: true
-               }
-            ],
             transcriptFields: [
                     "c__EmailAddress"
             ],
-            displayToAgent: true
-    }    ],
+            displayToAgent: true 
+            },
+            {
+                label: "Previous Conversation",
+                value: "{ [ { text: 'Hello World', type: 'Bot' }, { text: 'Hello', type: 'user' }, { text: 'How are you?', type: 'user' }, { text: 'Im fine, thanks', type: 'Bot' }, { text: 'Whats your name?', type: 'user' }, { text: 'My name is Bot', type: 'Bot' } ] }",
+                transcriptFields: [
+                        "c__Transcript"
+                ],
+                displayToAgent: true 
+            }
+        ],
         prechatEntities: [],
         receiveQueueUpdates: true,
         isPost: true,
