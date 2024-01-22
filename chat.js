@@ -164,38 +164,38 @@ const prechatValue = {
     messages : [
         {
             type: "Bot",
-            text: "Hello World'",
+            text: "Hello World",
             name: "Assistance Bot",
             time: "16:30 22/01/2023"
         },
         {
             type: "user",
-            text: "Hello'",
+            text: "Hello",
             name: nameVisitor,
             time: "16:32 22/01/2023"
         },
         {
             type: "user",
-            text: "How are you?'",
+            text: "How are you?",
             name: nameVisitor,
             time: "16:32 22/01/2023"
         },
         {
             type: "Bot",
-            text: "Im fine, thanks'",
+            text: "Im fine, thanks",
             name: "Assistance Bot",
             time: "16:32 22/01/2023"
 
         },
         {
             type: "user",
-            text: "Whats your name?'",
+            text: "Whats your name?",
             name: nameVisitor,
             time: "16:35 22/01/2023"
         },
         {
             type: "Bot",
-            text: "My name is Bot'",
+            text: "My name is Bot",
             name: "Assistance Bot",
             time: "16:35 22/01/2023"
 
