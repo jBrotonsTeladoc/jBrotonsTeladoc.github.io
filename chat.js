@@ -129,7 +129,7 @@ function sendMessageSF(message) {
 }
 
 async function receiveSFMessages(){
-    await sleep(2000);
+    await sleep(5000);
     const url = `${liveAgentEndpoint}System/Messages`;
     apiCall(url,'GET')
         .then(data => {
