@@ -1,6 +1,6 @@
 const liveAgentEndpoint = 'https://d.la4-c1cs-ia5.salesforceliveagent.com/chat/rest/'; // Reemplaza con tu endpoint
 const liveAgentVersion = '60'; // La versión de la API de Live Agent
-
+const nameVisitor = 'Alexander Gimenez'; // Nombre del visitante
 sequence = 1;
 affinityToken = null;
 sessionId = null;
@@ -83,7 +83,7 @@ function initiateChat() {
         deploymentId: "5728J000000004l",
         buttonId: "5738J000000005A",
         sessionId: sessionId,
-        visitorName: "Konda Rama",
+        visitorName: nameVisitor,
         prechatDetails: [
             {
             label: "Email",
@@ -163,28 +163,42 @@ function sleep(ms) {
 const prechatValue = {
     messages : [
         {
-            text: "Bot",
-            text: "Hello World'"
+            type: "Bot",
+            text: "Hello World'",
+            name: "Assistance Bot",
+            time: "16:30 22/01/2023"
         },
         {
-            text: "user",
-            text: "Hello'"
+            type: "user",
+            text: "Hello'",
+            name: nameVisitor,
+            time: "16:32 22/01/2023"
         },
         {
-            text: "user",
-            text: "How are you?'"
+            type: "user",
+            text: "How are you?'",
+            name: nameVisitor,
+            time: "16:32 22/01/2023"
         },
         {
-            text: "Bot",
-            text: "Im fine, thanks'"
+            type: "Bot",
+            text: "Im fine, thanks'",
+            name: "Assistance Bot",
+            time: "16:32 22/01/2023"
+
         },
         {
-            text: "user",
-            text: "Whats your name?'"
+            type: "user",
+            text: "Whats your name?'",
+            name: nameVisitor,
+            time: "16:35 22/01/2023"
         },
         {
-            text: "Bot",
-            text: "My name is Bot'"
+            type: "Bot",
+            text: "My name is Bot'",
+            name: "Assistance Bot",
+            time: "16:35 22/01/2023"
+
         }
     ]
 }
