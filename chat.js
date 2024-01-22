@@ -77,6 +77,7 @@ function getSessionId() {
 
 function initiateChat() {
     const chatInitUrl = `${liveAgentEndpoint}Chasitor/ChasitorInit`; 
+
     const chatInitData = {
         organizationId: "00D8J0000008gU0",
         deploymentId: "5728J000000004l",
@@ -94,7 +95,7 @@ function initiateChat() {
             },
             {
                 label: "Transcript",
-                value: "{ [ { text: 'Hello World', type: 'Bot' }, { text: 'Hello', type: 'user' }, { text: 'How are you?', type: 'user' }, { text: 'Im fine, thanks', type: 'Bot' }, { text: 'Whats your name?', type: 'user' }, { text: 'My name is Bot', type: 'Bot' } ] }",
+                value: JSON.stringify(prechatValue),
                 transcriptFields: [
                         "c__Transcript"
                 ],
@@ -157,5 +158,34 @@ function exitChat(){
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+const prechatValue = {
+    messages : [
+        {
+            text: "Bot",
+            text: "Hello World'"
+        },
+        {
+            text: "user",
+            text: "Hello'"
+        },
+        {
+            text: "user",
+            text: "How are you?'"
+        },
+        {
+            text: "Bot",
+            text: "Im fine, thanks'"
+        },
+        {
+            text: "user",
+            text: "Whats your name?'"
+        },
+        {
+            text: "Bot",
+            text: "My name is Bot'"
+        }
+    ]
 }
 
