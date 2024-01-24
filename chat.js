@@ -80,8 +80,8 @@ function initiateChat() {
 
     const chatInitData = {
         organizationId: "00D8J0000008gU0",
-        deploymentId: "5728J000000004l",
-        buttonId: "5738J000000005A",
+        deploymentId: "5728J000000004q",
+        buttonId: "5738J000000005F",
         sessionId: sessionId,
         visitorName: nameVisitor,
         prechatDetails: [
