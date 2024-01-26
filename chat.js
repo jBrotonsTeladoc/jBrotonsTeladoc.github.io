@@ -99,7 +99,7 @@ function initiateChat() {
                 "transcriptFields": [
                         "c__LastName"
                 ],
-                "displayToAgent": True 
+                "displayToAgent": true 
             },
             {
                 label: "Transcript",
