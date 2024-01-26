@@ -94,6 +94,14 @@ function initiateChat() {
             displayToAgent: true 
             },
             {
+                "label": "LastName",
+                "value": "Alex Gimenez",
+                "transcriptFields": [
+                        "c__LastName"
+                ],
+                "displayToAgent": True 
+            },
+            {
                 label: "Transcript",
                 value: JSON.stringify(prechatValue),
                 transcriptFields: [
