@@ -1,53 +1,23 @@
 
 
 <html>
+  <head>
+      <link rel="stylesheet" type="text/css" href="styles.css">
+  </head>
+  <body>
 
-<script src="https://teladoc-service--tdhint.sandbox.my.site.com/lightning/lightning.out.js"></script>
-<link rel="stylesheet" href="https://www.lightningdesignsystem.com/assets/styles/salesforce-lightning-design-system.min.css">
+    <div id="chatBox"></div>
 
-
-<div data-lightning-out="true"></div>
-
-  <script>
-    let description = {
-      "MemberId": "123456",
-      "MemberName": "John Doe",
-      "PhoneNumber": "123-456-7890",
-      "Email": "mail@mail.com"
-    }
-    const appName = 'c:MentalHealthSubmission';
-    const componentName = 'c:mentalHealthSubmissionLWC';
-    const lightningEndpoint = 'https://teladoc-service--tdhint.sandbox.my.site.com/mhsubmission';
-    const targetElement = document.querySelector("[data-lightning-out]");
-    const componentAttributes = {
-      description: JSON.stringify(description)
-    };
-
-    $Lightning.use(
-        appName,
-        function() {
-            console.log('APP Created');
-            $Lightning.createComponent(
-                componentName,
-                componentAttributes,
-                targetElement,
-                function(cmp) {
-                }
-            );
-        },
-        lightningEndpoint
-    );
-
-    document.addEventListener('saved-event', function (event) {
-      window.location.href = "/";
-    });
-    document.addEventListener('cancel-event', function (event) {
-      window.history.go(-1); 
-      return false;
-    });
-
-
-  </script>
-
-
+    <div id="messageBox">
+      <input type="text" id="userMessage" />
+      <button onclick="sendMessage()">Send</button>  
+    </div>
+    <button onclick="exitChat()">Close Chat</button>  
+    <script src="chat.js"></script>
+    <a id="liveagent_button_online_5738J000000005A" href="javascript://Chat" style="display: none;" onclick="liveagent.startChat('5738J000000005A')">ONLINE</a><div id="liveagent_button_offline_5738J000000005A" style="display: none;">OFFLINE</div><script type="text/javascript">
+      if (!window._laq) { window._laq = []; }
+      window._laq.push(function(){liveagent.showWhenOnline('5738J000000005A', document.getElementById('liveagent_button_online_5738J000000005A'));
+      liveagent.showWhenOffline('5738J000000005A', document.getElementById('liveagent_button_offline_5738J000000005A'));
+      });</script>
+  </body>
 </html>
