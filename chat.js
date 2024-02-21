@@ -46,7 +46,7 @@ function apiCall(url, method, body = null) {
         body: body ? JSON.stringify(body) : undefined
     })
     .then(response => {
-        return response.json();
+        return response.json().catch(() => false);
     });
 }
 
@@ -142,7 +142,7 @@ async function receiveSFMessages(){
     apiCall(url,'GET')
         .then(data => {
             console.log('Resultado de mensaje:', data);
-            if(data.messages.length > 0){
+            if(!data && data.messages.length > 0){
                 data.messages.forEach(element => {
                     if(element.type == "ChatMessage" && element.message.text != ""){
                         createSFChatMessage(element.message.text);
