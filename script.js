@@ -1,12 +1,7 @@
 document.getElementById('chat-form').addEventListener('submit', function(event) {
     event.preventDefault();
     var input = document.getElementById('chat-input');
-    var message = input.value;
-    if (message.trim() !== '') {
-        addMessageToChat('sent', message);
-        input.value = '';
-    }
-     generateResponse();
+    userMessage(input)
 });
 
 document.getElementById('chat-response').addEventListener('submit', function(event) {
@@ -18,6 +13,14 @@ document.getElementById('chat-response').addEventListener('submit', function(eve
         input.value = '';
     }
 });
+
+function userMessage(message){
+    if (message.trim() !== '') {
+        addMessageToChat('sent', message);
+        input.value = '';
+    }
+     generateResponse();
+}
 
 function addMessageToChat(type, message) {
     const chatMessages = document.getElementById('chat-messages');
@@ -50,10 +53,7 @@ if ('webkitSpeechRecognition' in window) {
     recognition.onend = function() {
         recognizing = false;
         micButton.classList.remove('active');
-        if (responseInput.value.trim() !== '') {
-            addMessageToChat('sent', responseInput.value);
-            responseInput.value = '';
-        }
+        userMessage(responseInput.value)
         micButton.textContent = '🎤';
     };
 
