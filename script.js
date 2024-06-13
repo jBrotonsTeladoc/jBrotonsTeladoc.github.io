@@ -1,7 +1,7 @@
 document.getElementById('chat-form').addEventListener('submit', function(event) {
     event.preventDefault();
-    const input = document.getElementById('chat-input');
-    const message = input.value;
+    var input = document.getElementById('chat-input');
+    var message = input.value;
     if (message.trim() !== '') {
         addMessageToChat('sent', message);
         input.value = '';
