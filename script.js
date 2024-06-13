@@ -78,3 +78,7 @@ micButton.addEventListener('click', function() {
         recognition.start();
     }
 });
+
+const apiKey = 'REPLACE_WITH_API_KEY'; // Este será reemplazado por GitHub Actions
+        // Usa apiKey en tu código JavaScript
+console.log(apiKey);
