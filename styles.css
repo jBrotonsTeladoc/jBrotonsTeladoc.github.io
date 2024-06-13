@@ -15,6 +15,20 @@ body, html {
 .left-grid {
     background-color: #f0f0f0;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.response-input {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-top: 10px;
+    background-color: #ffffff;
+    text-align: center;
 }
 
 .right-grid {
@@ -57,6 +71,17 @@ body, html {
     border-radius: 10px;
     padding: 10px;
     margin: 5px 0;
+    max-width: 80%;
+}
+
+.sent {
+    background-color: #dcf8c6;
+    align-self: flex-end;
+}
+
+.received {
+    background-color: #ffffff;
+    align-self: flex-start;
 }
 
 .chat-form {

@@ -9,8 +9,12 @@
 <body>
     <div class="container">
         <div class="left-grid">
-            <!-- Contenido del grid izquierdo -->
-            <p>Contenido del grid izquierdo</p>
+            <!-- Input para la respuesta del chat -->
+            <h2>Respuesta del Chat</h2>
+            <form id="chat-response" class="chat-response">
+              <input type="text" id="response-input" class="response-input" placeholder="Respuesta del chat...">
+              <button type="submit" class="chat-submit-response">Enviar</button>
+            </form>
         </div>
         <div class="right-grid">
             <div class="chat-container">
@@ -18,6 +22,7 @@
                     <h2>Chat</h2>
                 </div>
                 <div class="chat-messages" id="chat-messages">
+                    <!-- Los mensajes del chat aparecerán aquí -->
                 </div>
                 <form id="chat-form" class="chat-form">
                     <input type="text" id="chat-input" class="chat-input" placeholder="Escribe un mensaje..." required>
