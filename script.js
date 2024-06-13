@@ -9,14 +9,14 @@ document.getElementById('chat-response').addEventListener('submit', function(eve
     const input = document.getElementById('response-input');
     const message = input.value;
     if (message.trim() !== '') {
-        addMessageToChat('received', message);
+        addMessageToChat('agent', message);
         input.value = '';
     }
 });
 
 function userMessage(message){
     if (message.trim() !== '') {
-        addMessageToChat('sent', message);
+        addMessageToChat('user', message);
         input.value = '';
     }
      generateResponse();
@@ -27,10 +27,10 @@ function addMessageToChat(type, message) {
     const messageElement = document.createElement('div');
     messageElement.classList.add('chat-message', type);
     messageElement.textContent = message;
-    console.log((message.length*2+3));
     messageElement.style.width = (message.length*8.15) + 'px';
     chatMessages.appendChild(messageElement);
     chatMessages.scrollTop = chatMessages.scrollHeight;
+    messages.push({"type":type,"text":message});
 }
 
 const micButton = document.getElementById('mic-button');
@@ -84,6 +84,7 @@ micButton.addEventListener('click', function() {
 function generateResponse() {
     const azureKey = 'fvgyP2xTbhnH-Uq5J36NKbGB9FZGwfK1-tT4FuDn3n5PAzFugBHanw=='; 
     const url = `https://laia-backend.azurewebsites.net/api/generate?code=${azureKey}`;
+    console.log(messages);
 
     fetch(url)
         .then(response => {
@@ -94,7 +95,9 @@ function generateResponse() {
         })
         .then(data => {
             console.log('DATA:', data);
-            addMessageToChat('received', data); // Asegúrate de que `addMessageToChat` maneje la cadena JSON
+            addMessageToChat('agent', data); // Asegúrate de que `addMessageToChat` maneje la cadena JSON
         })
         .catch(error => console.error('Error:', error));
 }
+
+let messages = []
