@@ -91,6 +91,7 @@ function generateResponse() {
                 throw new Error('Network response was not ok ' + response.statusText);
             }
             console.log(response)
+            console.log(response.json())
             addMessageToChat('received', response);
         })
         .then(data => {
