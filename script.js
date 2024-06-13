@@ -7,9 +7,6 @@ document.getElementById('chat-form').addEventListener('submit', function(event) 
         input.value = '';
     }
     var response = generateResponse();
-    input = document.getElementById('response-input');
-    message = response;
-    addMessageToChat('received', message);
 });
 
 document.getElementById('chat-response').addEventListener('submit', function(event) {
@@ -87,7 +84,10 @@ const azureKey = 'fvgyP2xTbhnH-Uq5J36NKbGB9FZGwfK1-tT4FuDn3n5PAzFugBHanw==';
 
 function generateResponse() {
     fetch(`https://laia-backend.azurewebsites.net/api/generate\?code=${azureKey}`)
-        .then(response => response.json())
+        .then(response => {
+            input = document.getElementById('response-input');
+            addMessageToChat('received', response);
+        })
         .then(data => console.log(data))
         .catch(error => console.error('Error:', error));
 }
