@@ -6,7 +6,7 @@ document.getElementById('chat-form').addEventListener('submit', function(event) 
         addMessageToChat('sent', message);
         input.value = '';
     }
-    var response = generateResponse();
+     generateResponse();
 });
 
 document.getElementById('chat-response').addEventListener('submit', function(event) {
@@ -80,21 +80,22 @@ micButton.addEventListener('click', function() {
     }
 });
 
-const azureKey = 'fvgyP2xTbhnH-Uq5J36NKbGB9FZGwfK1-tT4FuDn3n5PAzFugBHanw=='; 
 
 function generateResponse() {
-    fetch(`https://laia-backend.azurewebsites.net/api/generate\?code=${azureKey}`)
+    const azureKey = 'fvgyP2xTbhnH-Uq5J36NKbGB9FZGwfK1-tT4FuDn3n5PAzFugBHanw=='; 
+    const url = `https://laia-backend.azurewebsites.net/api/generate?code=${azureKey}`;
+
+    fetch(url)
         .then(response => {
-            console.log('RESPONSE:')
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
             console.log(response)
-            console.log(JSON.stringify(response))
+            addMessageToChat('received', response);
         })
         .then(data => {
-            console.log('DATA:')
-            console.log(data)
-            console.log(JSON.stringify(data))
-            console.log(data)
-            addMessageToChat('received', response);
+            console.log('DATA:', data);
+            addMessageToChat('received', data); // Asegúrate de que `addMessageToChat` maneje la cadena JSON
         })
         .catch(error => console.error('Error:', error));
 }
