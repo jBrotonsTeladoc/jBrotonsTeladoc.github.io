@@ -1,45 +1,23 @@
-@font-face {
-    font-family: 'DMSans';
-    src: url('DMSans-VariableFont_opsz,wght.ttf') format('truetype');
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: Arial, sans-serif;
 }
 
-body {
-    font-family: 'DMSans', sans-serif;
+.container {
+    display: grid;
+    grid-template-columns: 3fr 1fr; /* El grid izquierdo ocupa 3/4 y el derecho 1/4 */
+    height: 100vh;
 }
 
-#chatBox {
-    height: 90vh;
-    overflow: auto;
-    border: 1px solid #ccc;
-    padding: 10px;
-    background-color: #f9f9f9;
-    width: 70%;
-}
-#userMessage {
-    width: 65%;
-    padding-right: 32px;
-}
-#messageBox{
-    padding-top: 12px;
-}
-.message {
-    padding: 5px 10px;
-    margin: 5px;
-    border-radius: 10px;
-    color: white;
-    background-color: #63cb77;
-    text-align: left;
-    max-width: 20%;
-    margin-left: auto;
+.left-grid {
+    background-color: #f0f0f0;
+    padding: 20px;
 }
 
-.messageSF {
-    padding: 5px 10px;
-    margin: 5px;
-    border-radius: 10px;
-    color: white;
-    background-color: #A9A9A9; /* Color grisáceo */
-    text-align: left;
-    max-width: 20%;
-    margin-left: 0; /* Alineación a la izquierda */
+.right-grid {
+    background-color: #d0d0d0;
+    padding: 20px;
 }
