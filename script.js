@@ -1,7 +1,7 @@
 document.getElementById('chat-form').addEventListener('submit', function(event) {
     event.preventDefault();
     var input = document.getElementById('chat-input');
-    userMessage(input)
+    userMessage(input.value)
 });
 
 document.getElementById('chat-response').addEventListener('submit', function(event) {
@@ -37,6 +37,7 @@ const micButton = document.getElementById('mic-button');
 const responseInput = document.getElementById('chat-response');
 let recognizing = false;
 let recognition;
+let messages = [];
 
 if ('webkitSpeechRecognition' in window) {
     recognition = new webkitSpeechRecognition();
@@ -100,4 +101,3 @@ function generateResponse() {
         .catch(error => console.error('Error:', error));
 }
 
-let messages = []
