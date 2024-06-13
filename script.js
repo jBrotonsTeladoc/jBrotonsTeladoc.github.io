@@ -5,9 +5,6 @@ document.getElementById('chat-form').addEventListener('submit', function(event) 
     if (message.trim() !== '') {
         addMessageToChat('sent', message);
         input.value = '';
-        input.style.width = 'auto'; // Restablece el ancho después de enviar el mensaje
-        input.style.height = 'auto'; // Restablece la altura después de enviar el mensaje
-        adjustInputWidth(input);
     }
 });
 
@@ -21,25 +18,13 @@ document.getElementById('chat-response').addEventListener('submit', function(eve
     }
 });
 
-function adjustInputWidth(input) {
-    const tempSpan = document.createElement('span');
-    tempSpan.style.visibility = 'hidden';
-    tempSpan.style.position = 'absolute';
-    tempSpan.style.whiteSpace = 'pre';
-    tempSpan.style.fontFamily = input.style.fontFamily;
-    tempSpan.style.fontSize = input.style.fontSize;
-    tempSpan.textContent = input.value || input.placeholder;
-    document.body.appendChild(tempSpan);
-    const width = tempSpan.clientWidth + 10;
-    input.style.width = width + 'px';
-    document.body.removeChild(tempSpan);
-}
-
 function addMessageToChat(type, message) {
     const chatMessages = document.getElementById('chat-messages');
     const messageElement = document.createElement('div');
     messageElement.classList.add('chat-message', type);
     messageElement.textContent = message;
+    console.log((message.length*2+3));
+    messageElement.style.width = (message.length*8.15) + 'px';
     chatMessages.appendChild(messageElement);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
