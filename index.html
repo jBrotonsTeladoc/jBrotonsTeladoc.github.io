@@ -10,10 +10,11 @@
 </head>
 <body>
     <img src="resources/tdh-logo-full-color-rgb.svg" class="image_header" />
+    <button id="start-button" class="start-button">Iniciar</button>
     <div class="container">
         <div class="left-grid">
             <!-- Input para la respuesta del chat -->
-            <video class="background-video"  class="video-js vjs-default-skin" autoplay muted >
+            <video id="background-video" class="background-video" autoplay muted >
               <source src="resource/wait_video.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
@@ -35,6 +36,6 @@
         </div>
     </div>
     <script src="script.js"></script>
-    <script src="https://vjs.zencdn.net/7.14.3/video.min.js"></script>
+    <script src="video.min.js"></script>
 </body>
 </html>
