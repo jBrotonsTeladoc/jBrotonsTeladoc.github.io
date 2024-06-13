@@ -47,6 +47,10 @@ if ('webkitSpeechRecognition' in window) {
     recognition.onend = function() {
         recognizing = false;
         micButton.classList.remove('active');
+        if (responseInput.value.trim() !== '') {
+            addMessageToChat('sent', responseInput.value);
+            responseInput.value = '';
+        }
         micButton.textContent = '🎤';
     };
 

@@ -40,7 +40,7 @@ body, html {
 }
 
 .chat-container {
-    background-color: #ffffff;
+    background-color: #f0f0f0;
     border-radius: 15px;
     width: 100%;
     max-width: 400px;
@@ -52,7 +52,7 @@ body, html {
 }
 
 .chat-header {
-    background-color: #4CAF50;
+    background-color: #351f65;
     color: white;
     padding: 10px;
     border-top-left-radius: 15px;
@@ -102,12 +102,18 @@ body, html {
 .chat-submit {
     padding: 10px 20px;
     border: none;
-    background-color: #4CAF50;
+    background-color: #351f65;
     color: white;
     border-radius: 10px;
     cursor: pointer;
 }
 
 .chat-submit:hover {
-    background-color: #45a049;
+    background-color: #351f65;
+}
+
+.image_header{
+    height: 40px;
+    padding-top: 8px;
+    padding-left: 8px;
 }
