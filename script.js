@@ -85,9 +85,14 @@ const azureKey = 'fvgyP2xTbhnH-Uq5J36NKbGB9FZGwfK1-tT4FuDn3n5PAzFugBHanw==';
 function generateResponse() {
     fetch(`https://laia-backend.azurewebsites.net/api/generate\?code=${azureKey}`)
         .then(response => {
+            console.log('RESPONSE:')
             console.log(response)
+            console.log(JSON.stringify(response))
         })
         .then(data => {
+            console.log('DATA:')
+            console.log(data)
+            console.log(JSON.stringify(data))
             console.log(data)
             addMessageToChat('received', response);
         })
