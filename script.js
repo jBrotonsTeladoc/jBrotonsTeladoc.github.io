@@ -2,6 +2,7 @@ document.getElementById('chat-form').addEventListener('submit', function(event) 
     event.preventDefault();
     var input = document.getElementById('chat-input');
     userMessage(input.value)
+    input.value = '';
 });
 
 document.getElementById('chat-response').addEventListener('submit', function(event) {
@@ -17,7 +18,6 @@ document.getElementById('chat-response').addEventListener('submit', function(eve
 function userMessage(message){
     if (message.trim() !== '') {
         addMessageToChat('user', message);
-        input.value = '';
     }
      generateResponse();
 }
