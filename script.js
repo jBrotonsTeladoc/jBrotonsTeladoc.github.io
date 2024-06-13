@@ -5,15 +5,6 @@ document.getElementById('chat-form').addEventListener('submit', function(event) 
     input.value = '';
 });
 
-document.getElementById('chat-response').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const input = document.getElementById('response-input');
-    const message = input.value;
-    if (message.trim() !== '') {
-        addMessageToChat('agent', message);
-        input.value = '';
-    }
-});
 
 function userMessage(message){
     if (message.trim() !== '') {
@@ -100,4 +91,21 @@ function generateResponse() {
         })
         .catch(error => console.error('Error:', error));
 }
+const player = videojs(document.getElementById('background-video'));
+
+playNewVideo('resource/init_video.mp4')
+
+function playNewVideo(videoUrl) {
+    player.src({ type: 'video/mp4', src: videoUrl });
+    player.loop(false);
+    player.muted(false);
+    player.play();
+}
+
+player.on('ended', () => {
+    player.src({ type: 'video/mp4', src: 'wait_video.mp4' });
+    player.loop(true);
+    player.muted(true);
+    player.play();
+});
 

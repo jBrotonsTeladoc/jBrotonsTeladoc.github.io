@@ -6,17 +6,17 @@
     <title>LAIA</title>
     <link rel="icon" href="resources/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="styles.css">
+    <link href="video-js.css" rel="stylesheet" />
 </head>
 <body>
     <img src="resources/tdh-logo-full-color-rgb.svg" class="image_header" />
     <div class="container">
         <div class="left-grid">
             <!-- Input para la respuesta del chat -->
-            <h2>Respuesta del Chata</h2>
-            <form id="chat-response" class="chat-response">
-              <input type="text" id="response-input" class="response-input" placeholder="Respuesta del chat...">
-              <button type="submit" class="chat-submit-response">Enviar</button>
-            </form>
+            <video class="background-video"  class="video-js vjs-default-skin" autoplay muted >
+              <source src="resource/wait_video.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
             <button id="mic-button" class="mic-button">🎤</button>
         </div>
         <div class="right-grid">
@@ -35,5 +35,6 @@
         </div>
     </div>
     <script src="script.js"></script>
+    <script src="https://vjs.zencdn.net/7.14.3/video.min.js"></script>
 </body>
 </html>
