@@ -121,7 +121,7 @@ body, html {
     height: 360px;
 }
 
-.agent {
+.assistant {
     background-color: #ffffff;
     align-self: flex-start;
     border-radius: 10px 10px 10px 0;

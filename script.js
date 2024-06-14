@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('start-button').addEventListener('click', () => {
         document.getElementById('popup').style.display = 'none';
         document.getElementById('container').style.display = '';
-        addMessageToChat('agent','Hello, how are you? Could you tell me what symptoms you have?')
+        addMessageToChat('assistant','Hello, how are you? Could you tell me what symptoms you have?')
         playNewVideo('resource/init_video.mp4');
     })
 
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(data => {
                 console.log('DATA:', data);
-                addMessageToChat('agent', data); // Asegúrate de que `addMessageToChat` maneje la cadena JSON
+                addMessageToChat('assistant', data); // Asegúrate de que `addMessageToChat` maneje la cadena JSON
             })
             .catch(error => console.error('Error:', error));
     }
