@@ -11,6 +11,16 @@ body, html {
     font-family: 'Effra',Arial, sans-serif;
 }
 
+.header{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    padding-top:18px;
+}
+.user-button{
+    border: none;
+    background: #ffffff;
+}
+
 .container {
     display: grid;
     grid-template-columns: 2fr 2fr; /* El grid izquierdo ocupa 3/4 y el derecho 1/4 */
@@ -161,7 +171,7 @@ body, html {
 .image_header{
     height: 40px;
     padding-top: 8px;
-    padding-left: 8px;
+    padding-left: 16px;
 }
 
 .mic-button{
