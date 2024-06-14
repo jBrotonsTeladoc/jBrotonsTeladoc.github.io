@@ -23,7 +23,7 @@ body, html {
 
 .container {
     display: grid;
-    grid-template-columns: 4fr 2fr; /* El grid izquierdo ocupa 3/4 y el derecho 1/4 */
+    grid-template-columns: 3fr 2fr; /* El grid izquierdo ocupa 3/4 y el derecho 1/4 */
     height: 100vh;
 }
 
@@ -135,8 +135,8 @@ body, html {
 }
 
 .background-video {
-    width: 1050px;
-    height: 700px;
+    width: 700px;
+    height: 466px;
 }
 
 .assistant {
