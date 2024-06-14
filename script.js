@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let messages = [];
     const videoElement = document.getElementById('background-video');
     const player = videojs(videoElement);
+    let mic_input_text = '';
 
     document.getElementById('chat-form').addEventListener('submit', function(event) {
         event.preventDefault();
@@ -95,13 +96,15 @@ document.addEventListener('DOMContentLoaded', () => {
         recognition.onstart = function() {
             recognizing = true;
             document.getElementById('mic-img').src = 'resources/no_voice.png'
+            document.getElementById('mic-img').style.width = '25px';
         };
 
         recognition.onend = function() {
             recognizing = false;
-            userMessage(responseInput.value)
+            //userMessage(mic_input_text)
             document.getElementById('mic-img').src = 'resources/on_voice.png'
-            responseInput.value = ''
+            document.getElementById('mic-img').style.width = '18px';
+            responseInput.value = mic_input_text
         };
 
         recognition.onresult = function(event) {
@@ -115,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     interimTranscript += event.results[i][0].transcript;
                 }
             }
-            responseInput.value = finalTranscript || interimTranscript;
+            mic_input_text = finalTranscript || interimTranscript;
         };
     }
 
