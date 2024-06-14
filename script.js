@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.blob();
             })
             .then(data => {
-                var url = URL.createObjectURL(blob);
+                var url = URL.createObjectURL(data);
                 playNewVideo(url);
                 removeSpinner();
                 addMessageToChat('assistant', data_text); // Asegúrate de que `addMessageToChat` maneje la cadena JSON
