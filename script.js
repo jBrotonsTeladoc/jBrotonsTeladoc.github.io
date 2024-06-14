@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    let memberData = [];
+
     document.getElementById('chat-form').addEventListener('submit', function(event) {
         event.preventDefault();
         var input = document.getElementById('chat-input');
@@ -22,7 +24,30 @@ document.addEventListener('DOMContentLoaded', () => {
         playNewVideo('resource/init_video.mp4');
     })
 
+    fetch('data/pii.csv')
+        .then(response => response.text())
+        .then(text => {
+            memberData= parseCSV(text);
+            console.log(memberData)
+        })
+        .catch(error => console.error('Error fetching the CSV file:', error));
 
+    function parseCSV(text) {
+        const lines = text.split('\n');
+        const result = [];
+        const headers = lines[0].split(',');
+    
+        for (let i = 1; i < lines.length; i++) {
+            const obj = {};
+            const currentline = lines[i].split(',');
+    
+            for (let j = 0; j < headers.length; j++) {
+                obj[headers[j]] = currentline[j];
+            }
+            result.push(obj);
+        }
+        return result;
+    }
     function userMessage(message){
         if (message.trim() !== '') {
             addMessageToChat('user', message);
