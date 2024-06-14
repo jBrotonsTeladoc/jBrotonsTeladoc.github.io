@@ -214,32 +214,38 @@ document.addEventListener('DOMContentLoaded', () => {
                 playNewVideo(url);
                 removeSpinner();
                 if(JSON.parse(data_text)['isFinal']){
-                    var finish_data = JSON.parse(data_text)
-                    finish_data['text'] = final_message[finish_data.text]
-                    data_text = JSON.stringify(finish_data);
-                    document.getElementById('chat-form').style.display = 'none';
-                    if(type != 'Emergency'){
-                        document.getElementById('schedule').style.display = 'flex';
-                    }
+                    data_text = finishMessage(data_text);
                 }
                 addMessageToChat('assistant', data_text); 
             })
             .catch(error => {
                 removeSpinner();
                 if(JSON.parse(data_text)['isFinal'] ){
-                    var finish_data = JSON.parse(data_text);
-                    var type=finish_data.text;
-                    finish_data['text'] = final_message[finish_data.text]
-                    data_text = JSON.stringify(finish_data);
-                    document.getElementById('chat-form').style.display = 'none';
-                    if(type != 'Emergency'){
-                        document.getElementById('schedule').style.display = 'flex';
-                    }
+                    data_text = finishMessage(data_text);
                  }
                 addMessageToChat('assistant', data_text);
             });
     }
 
+    function finishMessage(data_text){
+        var finish_data = JSON.parse(data_text);
+        var type=finish_data.text;
+        finish_data['text'] = final_message[finish_data.text]
+        if(finish_data['text'] == ''){
+            for (var key in final_message) {
+                if (type.includes(key)) {
+                    finish_data['text'] = final_message[key];
+                    break
+                }
+            }
+        }
+        data_text = JSON.stringify(finish_data);
+        document.getElementById('chat-form').style.display = 'none';
+        if(type != 'Emergency'){
+            document.getElementById('schedule').style.display = 'flex';
+        }
+        return data_text;
+    }
 
     function playNewVideo(videoUrl) {
         player.pause();
