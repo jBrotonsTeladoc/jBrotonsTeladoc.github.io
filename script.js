@@ -184,6 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const requestBody = {
             message: messages[messages.length - 1].content
         };
+        console.log(messages[messages.length - 1].content);
         fetch(url, {
             method: 'POST',
             headers: {
