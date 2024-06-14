@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('button-visit-2').innerText = '06/'+(getRandomInt(9)+15)+'/2024 \n'+(getRandomInt(9)+8)+':'+getRandomInt(6)+getRandomInt(10)
     document.getElementById('button-visit-3').innerText = '06/'+(getRandomInt(9)+15)+'/2024 \n'+(getRandomInt(9)+8)+':'+getRandomInt(6)+getRandomInt(10)
     var final_message = {
-        "General Medical": "Based on your symptoms, I recommend booking an appointment in 24/7. Here are some available timeslots, you can click on the one that suits you best",
+        "General Medical": "Based on your symptoms, I recommend booking an appointment in 24/7 Care. Here are some available timeslots, you can click on the one that suits you best",
         "Primary Care": "Based on your symptoms, I recommend booking an appointment in Primary Care. Here are some available timeslots, you can click on the one that suits you best",
         "Mental Health": "Based on your symptoms, I recommend booking an appointment in Mental Health. Here are some available timeslots, you can click on the one that suits you best",
         "Nutrition": "Based on your symptoms, I recommend booking an appointment in Nutrition. Here are some available timeslots, you can click on the one that suits you best",
