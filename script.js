@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
                    finish_data.text = final_message[finish_data.text]
                    data_text = JSON.stringify(finish_data);
                    document.getElementById('chat-form').style.display = 'none';
-                   document.getElementById('schedule').style.display = '';
+                   document.getElementById('schedule').style.display = 'flex';
                 }
                 addMessageToChat('assistant', data_text); 
             })
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     finish_data.text = final_message[finish_data.text]
                     data_text = JSON.stringify(finish_data);
                     document.getElementById('chat-form').style.display = 'none';
-                    document.getElementById('schedule').style.display = '';
+                    document.getElementById('schedule').style.display = 'flex';
                  }
                 addMessageToChat('assistant', data_text);
             });

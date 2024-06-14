@@ -162,13 +162,13 @@ body, html {
 }
 
 .chat-form {
-    display: none;
+    display: flex;
     border-top: 1px solid #ddd;
     padding: 10px;
 }
 
 .finish-buttons {
-    display: flex;
+    display: none;
     padding: 10px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
