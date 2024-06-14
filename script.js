@@ -130,6 +130,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    function addSpinner(){
+        const chatMessages = document.getElementById('chat-messages');
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('chat-message', 'spinner');
+        chatMessages.appendChild(messageElement);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function removeSpinner() {
+        const chatMessages = document.getElementById('chat-messages');
+        const spinnerElements = chatMessages.getElementsByClassName('spinner');
+        if (spinnerElements.length > 0) {
+            const lastSpinner = spinnerElements[spinnerElements.length - 1];
+            chatMessages.removeChild(lastSpinner);
+        }
+    }
+
 
     function generateResponse() {
         const azureKey = 'fvgyP2xTbhnH-Uq5J36NKbGB9FZGwfK1-tT4FuDn3n5PAzFugBHanw=='; 
@@ -140,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
             messages: messages,
             memberId: memberId
         };
-
+        addSpinner();
         fetch(url, {
             method: 'POST',
             headers: {
@@ -156,6 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(data => {
                 console.log('DATA:', data);
+                removeSpinner();
                 addMessageToChat('assistant', data); // Asegúrate de que `addMessageToChat` maneje la cadena JSON
             })
             .catch(error => console.error('Error:', error));
