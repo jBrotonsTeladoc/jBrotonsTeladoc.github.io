@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function generateAvatar(data_text) {
         const url = `https://laia-backend.azurewebsites.net/api/avatar?code=${azureKey}`;
         const requestBody = {
-            message: messages[messages.length - 1].content
+            message: JSON.parse(message)['text']
         };
         console.log(messages[messages.length - 1].content);
         fetch(url, {
