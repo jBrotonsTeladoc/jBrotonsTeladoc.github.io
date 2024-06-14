@@ -24,6 +24,14 @@ document.addEventListener('DOMContentLoaded', () => {
         playNewVideo('resource/init_video.mp4');
     })
 
+    document.getElementById('user-button').addEventListener('click', () => {
+        let new_display = '';
+        if (document.getElementById('info_user').style.display == ''){
+            new_display = 'none';
+        }
+        document.getElementById('info_user').style.display = new_display;
+    })
+
     fetch('data/pii.csv')
         .then(response => response.text())
         .then(text => {
