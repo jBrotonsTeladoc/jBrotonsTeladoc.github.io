@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const responseInput = document.getElementById('chat-input');
     let recognizing = false;
     let recognition;
-    let messages = [];
+    let messages = [{"role":"user","content":"Hello"}];
 
     if ('webkitSpeechRecognition' in window) {
         recognition = new webkitSpeechRecognition();
