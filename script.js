@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     let memberData = [];
-
+    let memberId = getRandomInt(300)+1;
     document.getElementById('chat-form').addEventListener('submit', function(event) {
         event.preventDefault();
         var input = document.getElementById('chat-input');
@@ -29,6 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(text => {
             memberData= parseCSV(text);
             console.log(memberData)
+            document.getElementById('member_id').textContent = 'Member Id: '+memberId;
+            document.getElementById('member_gender').textContent = 'Age: '+memberData[memberId]["age"];
+            document.getElementById('member_age').textContent = 'Gender: '+memberData[memberId]["gender"];
         })
         .catch(error => console.error('Error fetching the CSV file:', error));
 

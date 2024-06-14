@@ -13,7 +13,7 @@ body, html {
 
 .header{
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: 3fr 0.5fr 0.5FR;
     padding-top:18px;
 }
 .user-button{
