@@ -165,6 +165,6 @@ body, html {
 }
 
 .mic-button{
-    border: 0;
+    border: none;
     padding-right: 11px;
 }

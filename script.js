@@ -7,6 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
         input.value = '';
     });
 
+    document.getElementById('chat-input').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            document.querySelector('.chat-submit').click();
+        }
+    });
+
 
     document.getElementById('start-button').addEventListener('click', () => {
         document.getElementById('popup').style.display = 'none';
