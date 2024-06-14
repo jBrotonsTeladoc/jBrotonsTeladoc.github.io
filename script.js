@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 removeSpinner();
                 if(JSON.parse(data_text)['isFinal']){
                    var finish_data = JSON.parse(data_text)
-                   finish_data.text = final_message[finish_data.text]
+                   finish_data['text'] = final_message[finish_data.text]
                    data_text = JSON.stringify(finish_data);
                    document.getElementById('chat-form').style.display = 'none';
                    document.getElementById('schedule').style.display = 'flex';
@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 removeSpinner();
                 if(JSON.parse(data_text)['isFinal']){
                     var finish_data = JSON.parse(data_text)
-                    finish_data.text = final_message[finish_data.text]
+                    finish_data['text'] = final_message[finish_data.text]
                     data_text = JSON.stringify(finish_data);
                     document.getElementById('chat-form').style.display = 'none';
                     document.getElementById('schedule').style.display = 'flex';
