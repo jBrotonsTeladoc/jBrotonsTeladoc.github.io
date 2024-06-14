@@ -27,6 +27,12 @@ body, html {
     height: 100vh;
 }
 
+.info_user{
+    border: 2px solid  #351f65;
+    text-align: center;
+    padding: 5px;
+}
+
 .popup{
     display: flex;
     justify-content: center;
