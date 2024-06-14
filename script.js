@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('start-button').addEventListener('click', () => {
         document.getElementById('popup').style.display = 'none';
         document.getElementById('container').style.display = '';
-        addMessageToChat('assistant',JSON.stringify({'text': "Hi, I'm Laia! I'm here to assist you into choosing the correct Teladoc program for your care. Could you share with me what symptoms do you have? ",'isFinal':'false'}))
+        addMessageToChat('assistant',JSON.stringify({'text': "Hi, I'm Laia! I'm here to assist you into choosing the correct Teladoc program for your care. Could you share with me what symptoms do you have? ",'isFinal':false}))
         playNewVideo('resource/init_video.mp4');
     })
 
@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch(error => {
                 removeSpinner();
-                if(JSON.parse(data_text)['isFinal']){
+                if(JSON.parse(data_text)['isFinal'] ){
                     var finish_data = JSON.parse(data_text)
                     finish_data['text'] = final_message[finish_data.text]
                     data_text = JSON.stringify(finish_data);
