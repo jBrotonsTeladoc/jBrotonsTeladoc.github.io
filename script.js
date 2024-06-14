@@ -195,10 +195,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok ' + response.statusText);
                 }
-                return response.text();
+                return response.blob();
             })
             .then(data => {
-                console.log('DATA:', data);
+                var url = URL.createObjectURL(blob);
+                playNewVideo(url);
                 removeSpinner();
                 addMessageToChat('assistant', data_text); // Asegúrate de que `addMessageToChat` maneje la cadena JSON
             })
