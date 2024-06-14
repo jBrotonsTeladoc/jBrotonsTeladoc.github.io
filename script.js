@@ -214,22 +214,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 playNewVideo(url);
                 removeSpinner();
                 if(JSON.parse(data_text)['isFinal']){
-                   var finish_data = JSON.parse(data_text)
-                   finish_data['text'] = final_message[finish_data.text]
-                   data_text = JSON.stringify(finish_data);
-                   document.getElementById('chat-form').style.display = 'none';
-                   document.getElementById('schedule').style.display = 'flex';
+                    var finish_data = JSON.parse(data_text)
+                    finish_data['text'] = final_message[finish_data.text]
+                    data_text = JSON.stringify(finish_data);
+                    document.getElementById('chat-form').style.display = 'none';
+                    if(type != 'Emergency'){
+                        document.getElementById('schedule').style.display = 'flex';
+                    }
                 }
                 addMessageToChat('assistant', data_text); 
             })
             .catch(error => {
                 removeSpinner();
                 if(JSON.parse(data_text)['isFinal'] ){
-                    var finish_data = JSON.parse(data_text)
+                    var finish_data = JSON.parse(data_text);
+                    var type=finish_data.text;
                     finish_data['text'] = final_message[finish_data.text]
                     data_text = JSON.stringify(finish_data);
                     document.getElementById('chat-form').style.display = 'none';
-                    document.getElementById('schedule').style.display = 'flex';
+                    if(type != 'Emergency'){
+                        document.getElementById('schedule').style.display = 'flex';
+                    }
                  }
                 addMessageToChat('assistant', data_text);
             });
@@ -266,6 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let message = `Your appointment has been confirmed, please meet your doctor on ${fecha} at ${hora}.`;
 
         addMessageToChat("assistant",JSON.stringify({text:message}))
+        document.getElementById('schedule').style.display = 'none';
     }
 
     // Lista de IDs de los botones
