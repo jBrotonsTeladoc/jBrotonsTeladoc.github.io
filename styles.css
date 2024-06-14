@@ -162,9 +162,27 @@ body, html {
 }
 
 .chat-form {
-    display: flex;
+    display: none;
     border-top: 1px solid #ddd;
     padding: 10px;
+}
+
+.finish-buttons {
+    display: flex;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.visit-button{
+    padding: 10px 20px;
+    border: none;
+    background-color: #351f65;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .chat-input {
