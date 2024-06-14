@@ -10,15 +10,19 @@
 </head>
 <body>
     <img src="resources/tdh-logo-full-color-rgb.svg" class="image_header" />
-    <button id="start-button" class="start-button">Iniciar</button>
-    <div class="container">
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <p>You are going to contact an AI, if you have any questions or issues please contact technical support.</p>
+            <button id="start-button" class="start-button">Accept</button>
+        </div>
+    </div>
+    <div class="container" id="container" style="display: none;">
         <div class="left-grid">
             <!-- Input para la respuesta del chat -->
-            <video id="background-video" class="background-video" autoplay muted >
-              <source src="resource/wait_video.mp4" type="video/mp4">
+            <video id="background-video" class="video-js vjs-default-skin background-video" autoplay muted >
+              <source src="resource/wait_video_0.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
-            <button id="mic-button" class="mic-button">🎤</button>
         </div>
         <div class="right-grid">
             <div class="chat-container">
@@ -29,6 +33,9 @@
                     <!-- Los mensajes del chat aparecerán aquí -->
                 </div>
                 <form id="chat-form" class="chat-form">
+                    <button id="mic-button" class="mic-button">
+                        <img id="mic-img" src="resources/on_voice.png"style="width: 18px; height: 25px;">
+                    </button>
                     <input type="text" id="chat-input" class="chat-input" placeholder="Escribe un mensaje..." required>
                     <button type="submit" class="chat-submit">Enviar</button>
                 </form>

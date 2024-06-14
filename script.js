@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     document.getElementById('start-button').addEventListener('click', () => {
+        document.getElementById('popup').style.display = 'none';
+        document.getElementById('container').style.display = '';
+        addMessageToChat('agent','Hello, how are you? Could you tell me what symptoms you have?')
         playNewVideo('resource/init_video.mp4');
     })
 
@@ -28,11 +31,11 @@ document.addEventListener('DOMContentLoaded', () => {
         messageElement.style.width = (message.length*8.15) + 'px';
         chatMessages.appendChild(messageElement);
         chatMessages.scrollTop = chatMessages.scrollHeight;
-        messages.push({"type":type,"text":message});
+        messages.push({"role":type,"content":message});
     }
 
     const micButton = document.getElementById('mic-button');
-    const responseInput = document.getElementById('chat-response');
+    const responseInput = document.getElementById('chat-input');
     let recognizing = false;
     let recognition;
     let messages = [];
@@ -45,15 +48,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         recognition.onstart = function() {
             recognizing = true;
-            micButton.classList.add('active');
-            micButton.textContent = '🔴';
+            document.getElementById('mic-img').src = 'resources/no_voice.png'
         };
 
         recognition.onend = function() {
             recognizing = false;
-            micButton.classList.remove('active');
             userMessage(responseInput.value)
-            micButton.textContent = '🎤';
+            document.getElementById('mic-img').src = 'resources/on_voice.png'
+            responseInput.value = ''
         };
 
         recognition.onresult = function(event) {
@@ -85,7 +87,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const url = `https://laia-backend.azurewebsites.net/api/generate?code=${azureKey}`;
         console.log(messages);
 
-        fetch(url)
+        const requestBody = {
+            messages: messages
+        };
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        })
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok ' + response.statusText);
@@ -118,9 +130,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     player.on('ended', () => {
         player.pause();
-        player.src({ type: 'video/mp4', src: 'resource/wait_video.mp4' });
+        player.src({ type: 'video/mp4', src: 'resource/wait_video_'+getRandomInt(2)+'.mp4' });
         player.loop(true);
         player.muted(true);
         player.play();
     });
+
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+      }
 });
