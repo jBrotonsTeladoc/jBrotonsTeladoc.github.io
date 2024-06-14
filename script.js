@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const videoElement = document.getElementById('background-video');
     const player = videojs(videoElement);
     let mic_input_text = '';
+    const azureKey = 'fvgyP2xTbhnH-Uq5J36NKbGB9FZGwfK1-tT4FuDn3n5PAzFugBHanw=='; 
+
 
     document.getElementById('chat-form').addEventListener('submit', function(event) {
         event.preventDefault();
@@ -149,7 +151,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function generateResponse() {
-        const azureKey = 'fvgyP2xTbhnH-Uq5J36NKbGB9FZGwfK1-tT4FuDn3n5PAzFugBHanw=='; 
         const url = `https://laia-backend.azurewebsites.net/api/generate?code=${azureKey}`;
         console.log(messages);
 
@@ -173,10 +174,39 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(data => {
                 console.log('DATA:', data);
-                removeSpinner();
-                addMessageToChat('assistant', data); // Asegúrate de que `addMessageToChat` maneje la cadena JSON
+                generateAvatar(data)
             })
             .catch(error => console.error('Error:', error));
+    }
+
+    function generateAvatar(data_text) {
+        const url = `https://laia-backend.azurewebsites.net/api/avatar?code=${azureKey}`;
+        const requestBody = {
+            message: messages[messages.length - 1].content
+        };
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log('DATA:', data);
+                removeSpinner();
+                addMessageToChat('assistant', data_text); // Asegúrate de que `addMessageToChat` maneje la cadena JSON
+            })
+            .catch(error => {
+                console.log(error)
+                removeSpinner();
+                addMessageToChat('assistant', data_text);
+            });
     }
 
 
