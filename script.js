@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('start-button').addEventListener('click', () => {
         document.getElementById('popup').style.display = 'none';
         document.getElementById('container').style.display = '';
-        addMessageToChat('assistant','Hello, how are you? Could you tell me what symptoms you have?')
+        addMessageToChat('assistant',JSON.stringify({'text': "Hi, I'm Laia! I'm here to assist you into choosing the correct Teladoc program for your care. Could you share with me what symptoms do you have? ",'isFinal':'false'}))
         playNewVideo('resource/init_video.mp4');
     })
 
@@ -45,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.text())
         .then(text => {
             memberData= parseCSV(text);
-            console.log(memberData)
             document.getElementById('member_id').textContent = 'Member Id: '+memberId;
             document.getElementById('member_gender').textContent = 'Age: '+memberData[memberId]["age"];
             document.getElementById('member_age').textContent = 'Gender: '+memberData[memberId]["gender"];
@@ -79,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const chatMessages = document.getElementById('chat-messages');
         const messageElement = document.createElement('div');
         messageElement.classList.add('chat-message', type);
-        messageElement.textContent = message;
+        messageElement.textContent = type=='assistant' ? JSON.parse(message)['text']:message;
         messageElement.style.width = (message.length*8.15) + 'px';
         chatMessages.appendChild(messageElement);
         chatMessages.scrollTop = chatMessages.scrollHeight;
