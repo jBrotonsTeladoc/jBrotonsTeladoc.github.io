@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 var url = URL.createObjectURL(data);
                 playNewVideo(url);
                 removeSpinner();
-                if(JSON.parse(data_text).isFinal){
+                if(JSON.parse(data_text)['isFinal']){
                    var finish_data = JSON.parse(data_text)
                    finish_data.text = final_message[finish_data.text]
                    data_text = JSON.stringify(finish_data);
@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch(error => {
                 removeSpinner();
-                if(JSON.parse(data_text).isFinal){
+                if(JSON.parse(data_text)['isFinal']){
                     var finish_data = JSON.parse(data_text)
                     finish_data.text = final_message[finish_data.text]
                     data_text = JSON.stringify(finish_data);
