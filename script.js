@@ -2,6 +2,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let memberData = [];
     let memberId = getRandomInt(300)+1;
+    let totalVideos = 2;
+    const micButton = document.getElementById('mic-button');
+    const responseInput = document.getElementById('chat-input');
+    let recognizing = false;
+    let recognition;
+    let messages = [];
+    const videoElement = document.getElementById('background-video');
+    const player = videojs(videoElement);
+
     document.getElementById('chat-form').addEventListener('submit', function(event) {
         event.preventDefault();
         var input = document.getElementById('chat-input');
@@ -77,11 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
         messages.push({"role":type,"content":message});
     }
 
-    const micButton = document.getElementById('mic-button');
-    const responseInput = document.getElementById('chat-input');
-    let recognizing = false;
-    let recognition;
-    let messages = [{"role":"user","content":"Hello"}];
 
     if ('webkitSpeechRecognition' in window) {
         recognition = new webkitSpeechRecognition();
@@ -131,7 +135,8 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(messages);
 
         const requestBody = {
-            messages: messages
+            messages: messages,
+            memberId: memberId
         };
 
         fetch(url, {
@@ -154,14 +159,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => console.error('Error:', error));
     }
 
-    const videoElement = document.getElementById('background-video');
-    
-    if (!videoElement) {
-        console.error("Elemento de video no encontrado");
-        return;
-    }
-
-    const player = videojs(videoElement);
 
     function playNewVideo(videoUrl) {
         player.pause();
@@ -173,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     player.on('ended', () => {
         player.pause();
-        player.src({ type: 'video/mp4', src: 'resource/wait_video_'+getRandomInt(2)+'.mp4' });
+        player.src({ type: 'video/mp4', src: 'resource/wait_video_'+getRandomInt(totalVideos)+'.mp4' });
         player.loop(true);
         player.muted(true);
         player.play();
