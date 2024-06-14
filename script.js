@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function addSpinner(){
         const chatMessages = document.getElementById('chat-messages');
         const messageElement = document.createElement('div');
-        messageElement.classList.add('chat-message', 'spinner');
+        messageElement.classList.add('chat-message', 'spinner','assistant');
         chatMessages.appendChild(messageElement);
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
