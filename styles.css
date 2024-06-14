@@ -149,6 +149,18 @@ body, html {
     max-width: 80%;
 }
 
+.spinner_chat {
+    background-color: #ffffff;
+    align-self: flex-end;
+    border-radius: 10px 10px 0 10px;
+    margin: auto;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    max-width: 80%;
+    text-align: right;
+}
+
 .chat-form {
     display: flex;
     border-top: 1px solid #ddd;
