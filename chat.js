@@ -1,4 +1,4 @@
-const liveAgentEndpoint = 'https://d.la4-c1cs-ia5.salesforceliveagent.com/chat/rest/'; // Reemplaza con tu endpoint
+const liveAgentEndpoint = 'https://d.la12s-core1.sfdc-8tgtt5.salesforceliveagent.com/chat/rest/'; // Reemplaza con tu endpoint
 const liveAgentVersion = '60'; // La versión de la API de Live Agent
 const nameVisitor = 'Alexander Gimenez'; // Nombre del visitante
 sequence = 1;
@@ -84,9 +84,9 @@ function initiateChat() {
     const chatInitUrl = `${liveAgentEndpoint}Chasitor/ChasitorInit`; 
 
     const chatInitData = {
-        organizationId: "00D8J0000008gU0",
-        deploymentId: "5728J000000004q",
-        buttonId: "5738J000000005F",
+        organizationId: "00D6u0000008g8A",
+        deploymentId: "572dn0000001TmL",
+        buttonId: "573dn0000000MRx",
         sessionId: sessionId,
         visitorName: nameVisitor,
         prechatDetails: [
