@@ -147,7 +147,7 @@ async function receiveSFMessages(){
     apiCall(url,'GET')
         .then(data => {
             console.log('Resultado de mensaje:', data);
-            if(data.messages.length > 0){
+            if(data != undefined && data != '' && data.messages.length > 0){
                 data.messages.forEach(element => {
                     if(element.type == "ChatMessage" && element.message.text != ""){
                         createSFChatMessage(element.message.text);
