@@ -34,7 +34,7 @@ function createHeaders() {
         'X-LIVEAGENT-API-VERSION': liveAgentVersion,
         'X-LIVEAGENT-AFFINITY': affinityToken || 'null',
         'X-LIVEAGENT-SESSION-KEY': sessionKey,
-        'X-LIVEAGENT-SEQUENCE': sequence
+        //'X-LIVEAGENT-SEQUENCE': sequence
     };
 }
 
