@@ -105,15 +105,22 @@ function initiateChat() {
                         "c__LastName"
                 ],
                 "displayToAgent": true 
-            },
-            {
+            },{
+                "label": "MemberId",
+                "value": 2,
+                "transcriptFields": [
+                        "c__MemberId"
+                ],
+                "displayToAgent": true 
+            }
+            /*{
                 label: "Transcript",
                 value: JSON.stringify(prechatValue),
                 transcriptFields: [
                         "c__Transcript"
                 ],
                 displayToAgent: true 
-            }
+            }*/
         ],
         prechatEntities: [],
         receiveQueueUpdates: true,
