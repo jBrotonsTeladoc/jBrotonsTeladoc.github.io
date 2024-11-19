@@ -107,7 +107,7 @@ function initiateChat() {
                 "displayToAgent": true 
             },{
                 "label": "MemberId",
-                "value": 2,
+                "value": 6,
                 "transcriptFields": [
                         "c__MemberId"
                 ],
