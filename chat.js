@@ -1,4 +1,4 @@
-const liveAgentEndpoint = 'https://d.la12s-core1.sfdc-8tgtt5.salesforceliveagent.com/chat/rest/'; // Reemplaza con tu endpoint
+const liveAgentEndpoint = 'https://d.la1s-core1.sfdc-8tgtt5.salesforceliveagent.com/chat/rest/'; // Reemplaza con tu endpoint
 const liveAgentVersion = '60'; // La versión de la API de Live Agent
 const nameVisitor = 'Alexander Gimenez'; // Nombre del visitante
 sequence = 1;
