@@ -1,5 +1,20 @@
-<a id="liveagent_button_online_5738J000000005F" href="javascript://Chat" style="display: none;" onclick="liveagent.startChat('5738J000000005F')"><!-- Online Chat Content --></a><div id="liveagent_button_offline_5738J000000005F" style="display: none;"><!-- Offline Chat Content --></div><script type="text/javascript">
-if (!window._laq) { window._laq = []; }
-window._laq.push(function(){liveagent.showWhenOnline('5738J000000005F', document.getElementById('liveagent_button_online_5738J000000005F'));
-liveagent.showWhenOffline('5738J000000005F', document.getElementById('liveagent_button_offline_5738J000000005F'));
-});</script>
+<!DOCTYPE html>
+<html>
+  <head>
+      <link rel="stylesheet" type="text/css" href="styles.css">
+  </head>
+  <body>
+    <div id="chatBox"></div>
+    <div id="messageBox">
+      <input type="text" id="userMessage" />
+      <button onclick="sendMessage()">Send</button>  
+    </div>
+    <button onclick="exitChat()">Close Chat</button>  
+    <script src="chat.js"></script>
+    <a id="liveagent_button_online_5738J000000005A" href="javascript://Chat" style="display: none;" onclick="liveagent.startChat('5738J000000005A')">ONLINE</a><div id="liveagent_button_offline_5738J000000005A" style="display: none;">OFFLINE</div><script type="text/javascript">
+      if (!window._laq) { window._laq = []; }
+      window._laq.push(function(){liveagent.showWhenOnline('5738J000000005A', document.getElementById('liveagent_button_online_5738J000000005A'));
+      liveagent.showWhenOffline('5738J000000005A', document.getElementById('liveagent_button_offline_5738J000000005A'));
+      });</script>
+  </body>
+</html>
