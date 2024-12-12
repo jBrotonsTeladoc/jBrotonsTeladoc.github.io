@@ -84,9 +84,9 @@ function initiateChat() {
     const chatInitUrl = `${liveAgentEndpoint}Chasitor/ChasitorInit`; 
 
     const chatInitData = {
-        organizationId: "00D6u0000008g8A",
-        deploymentId: "572dn0000001TmL",
-        buttonId: "573dn0000000MRx",
+        organizationId: "00D6u0000000MpL",
+        deploymentId: "572dn000000I9OD",
+        buttonId: "573dn0000001hED",
         sessionId: sessionId,
         visitorName: nameVisitor,
         prechatDetails: [
