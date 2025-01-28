@@ -108,7 +108,8 @@ function initiateChat() {
       value: 1,
       transcriptFields: ["c__MemberId"],
       displayToAgent: true
-    },
+    }
+    /*,
     {
       label: "Transcript",
       value: {
@@ -163,7 +164,7 @@ function initiateChat() {
             time: "2025-01-22 07:35:15 -0600"
           }
         ]
-      },
+      } */,
       transcriptFields: ["c__Transcript"],
       displayToAgent: false
     }
