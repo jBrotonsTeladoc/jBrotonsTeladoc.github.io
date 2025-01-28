@@ -78,7 +78,7 @@ function getSessionId() {
             console.log('Resultado de getSessionId:', data);
             initiateChat(data);
         })
-        .catch(error : console.error('Error al obtener el ID de sesión:', error));
+        .catch(error => console.error('Error al obtener el ID de sesión:', error));
 }
 
 function initiateChat() {
@@ -182,7 +182,7 @@ function initiateChat() {
             sequence++;
             console.log('Resultado de initiateChat:', response);
         })
-        .catch(error : console.error('Error al iniciar chat:', error));
+        .catch(error => console.error('Error al iniciar chat:', error));
 }
 
 function sendMessageSF(message) {
@@ -192,7 +192,7 @@ function sendMessageSF(message) {
             sequence++;
             console.log('Resultado de mensaje:', response);
         })
-        .catch(error : console.error('Error al iniciar chat:', error));
+        .catch(error => console.error('Error al iniciar chat:', error));
 }
 
 async function receiveSFMessages(){
@@ -210,7 +210,7 @@ async function receiveSFMessages(){
             }
             receiveSFMessages();
         })
-        .catch(error : console.error('Error al obtener el mensaje de sesión:', error));
+        .catch(error => console.error('Error al obtener el mensaje de sesión:', error));
 }
 
 function exitChat(){ 
@@ -220,7 +220,7 @@ function exitChat(){
             sequence++;
             console.log('Resultado de cerrarChat:', response); // Agregado console.log
         })
-        .catch(error : console.error('Error al iniciar chat:', error));
+        .catch(error => console.error('Error al iniciar chat:', error));
 }
 
 function sleep(ms) {
