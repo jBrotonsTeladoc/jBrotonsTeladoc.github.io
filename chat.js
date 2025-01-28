@@ -108,8 +108,7 @@ function initiateChat() {
       value: 1,
       transcriptFields: ["c__MemberId"],
       displayToAgent: true
-    }
-    /*,
+    },
     {
       label: "Transcript",
       value: {
@@ -167,7 +166,7 @@ function initiateChat() {
       },
       transcriptFields: ["c__Transcript"],
       displayToAgent: false
-    }*/
+    }
   ],
   prechatEntities: [],
   receiveQueueUpdates: true,
