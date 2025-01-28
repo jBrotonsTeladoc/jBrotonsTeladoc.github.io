@@ -164,10 +164,10 @@ function initiateChat() {
             time: "2025-01-22 07:35:15 -0600"
           }
         ]
-      } */,
+      },
       transcriptFields: ["c__Transcript"],
       displayToAgent: false
-    }
+    }*/
   ],
   prechatEntities: [],
   receiveQueueUpdates: true,
