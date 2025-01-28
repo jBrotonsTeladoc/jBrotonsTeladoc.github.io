@@ -71,7 +71,7 @@ function apiCallText(url, method, body = null) {
 function getSessionId() {
     const url = `${liveAgentEndpoint}System/SessionId`;
     apiCall(url,'GET')
-        .then(data : {
+        .then(data => {
             affinityToken = data.affinityToken;
             sessionId = data.id;
             sessionKey = data.key;
@@ -178,7 +178,7 @@ function initiateChat() {
 };
 
     apiCallText(chatInitUrl, 'POST', chatInitData)
-        .then(response : {
+        .then(response => {
             sequence++;
             console.log('Resultado de initiateChat:', response);
         })
@@ -188,7 +188,7 @@ function initiateChat() {
 function sendMessageSF(message) {
     const chatInitUrl = `${liveAgentEndpoint}Chasitor/ChatMessage`;
     apiCallText(chatInitUrl, 'POST', {text: message})
-        .then(response : {
+        .then(response => {
             sequence++;
             console.log('Resultado de mensaje:', response);
         })
@@ -199,7 +199,7 @@ async function receiveSFMessages(){
     await sleep(5000);
     const url = `${liveAgentEndpoint}System/Messages`;
     apiCall(url,'GET')
-        .then(data : {
+        .then(data => {
             console.log('Resultado de mensaje:', data);
             if(data != undefined && data != '' && data.messages.length > 0){
                 data.messages.forEach(element : {
@@ -216,7 +216,7 @@ async function receiveSFMessages(){
 function exitChat(){ 
     const chatInitUrl = `${liveAgentEndpoint}Chasitor/ChatEnd`; // Reemplaza 'hostname' con tu endpoint real
     apiCallText(chatInitUrl, 'POST', {reason: "client"})
-        .then(response : {
+        .then(response => {
             sequence++;
             console.log('Resultado de cerrarChat:', response); // Agregado console.log
         })
