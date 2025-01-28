@@ -202,7 +202,7 @@ async function receiveSFMessages(){
         .then(data => {
             console.log('Resultado de mensaje:', data);
             if(data != undefined && data != '' && data.messages.length > 0){
-                data.messages.forEach(element : {
+                data.messages.forEach(element => {
                     if(element.type == "ChatMessage" && element.message.text != ""){
                         createSFChatMessage(element.message.text);
                     }
@@ -224,7 +224,7 @@ function exitChat(){
 }
 
 function sleep(ms) {
-    return new Promise(resolve : setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 const prechatValue = {
