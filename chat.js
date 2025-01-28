@@ -39,21 +39,22 @@ function createHeaders() {
 }
 
 function apiCall(url, method, body = null) {
-    const headers = createHeaders();
-    return fetch(url, {
-        method: method,
-        headers: headers,
-        body: body ? JSON.stringify(body) : undefined
-    })
-    .then(response : {
-        const contentType = response.headers.get('Content-Type');
-        if (contentType && contentType.includes('application/json')) {
-          return response.json();
-        } else {
-          return response.text();
-        }
-    });
+  const headers = createHeaders();
+  return fetch(url, {
+    method: method,
+    headers: headers,
+    body: body ? JSON.stringify(body) : undefined
+  })
+  .then(response => {
+    const contentType = response.headers.get('Content-Type');
+    if (contentType && contentType.includes('application/json')) {
+      return response.json();
+    } else {
+      return response.text();
+    }
+  });
 }
+
 
 function apiCallText(url, method, body = null) {
     const headers = createHeaders();
