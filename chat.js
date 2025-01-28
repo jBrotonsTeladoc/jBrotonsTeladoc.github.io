@@ -63,7 +63,7 @@ function apiCallText(url, method, body = null) {
         headers: headers,
         body: body ? JSON.stringify(body) : undefined
     })
-    .then(response : {
+    .then(response => {
         return response.text();
     });
 }
