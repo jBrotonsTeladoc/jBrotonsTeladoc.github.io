@@ -165,7 +165,7 @@ function initiateChat() {
         ]
       }),
       transcriptFields: ["c__Transcript"],
-      displayToAgent: false
+      displayToAgent: true
     }
   ],
   prechatEntities: [],
