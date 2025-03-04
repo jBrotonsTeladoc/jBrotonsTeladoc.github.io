@@ -198,7 +198,7 @@ function sendCustomEvent() {
     const customEventUrl = `${liveAgentEndpoint}Chasitor/CustomEvent`;
     const customEventData = {
         type: "Attachment",
-        data: [3,4]
+        data: "[3,4]"
     };
     apiCallText(customEventUrl, 'POST', customEventData)
         .then(response => {
