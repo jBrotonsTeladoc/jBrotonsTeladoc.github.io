@@ -1,7 +1,7 @@
 const liveAgentEndpoint = 'https://d.la12s-core1.sfdc-8tgtt5.salesforceliveagent.com/chat/rest/'; // Reemplaza con tu endpoint
 const liveAgentVersion = '60'; // La versión de la API de Live Agent
 const nameVisitor = 'Alexander Gimenez'; // Nombre del visitante
-let sequence = 0;
+let sequence = 1;
 let affinityToken = null;
 let sessionId = null;
 let sessionKey = null;
@@ -30,36 +30,30 @@ function createSFChatMessage(message){
     newMessageInChat("messageSF", message);
 }
 
-/**
- * Crea los headers y asigna la secuencia actual.
- * Cada llamada a esta función incrementa la secuencia.
- */
 function createHeaders() {
-    const headers = {
+    return {
         'X-LIVEAGENT-API-VERSION': liveAgentVersion,
         'X-LIVEAGENT-AFFINITY': affinityToken || 'null',
         'X-LIVEAGENT-SESSION-KEY': sessionKey,
         'X-LIVEAGENT-SEQUENCE': sequence
     };
-    sequence++;  // Incrementamos inmediatamente para la próxima llamada
-    return headers;
 }
 
 function apiCall(url, method, body = null) {
-    const headers = createHeaders();
-    return fetch(url, {
-        method: method,
-        headers: headers,
-        body: body ? JSON.stringify(body) : undefined
-    })
-    .then(response => {
-        const contentType = response.headers.get('Content-Type');
-        if (contentType && contentType.includes('application/json')) {
-            return response.json();
-        } else {
-            return response.text();
-        }
-    });
+  const headers = createHeaders();
+  return fetch(url, {
+    method: method,
+    headers: headers,
+    body: body ? JSON.stringify(body) : undefined
+  })
+  .then(response => {
+    const contentType = response.headers.get('Content-Type');
+    if (contentType && contentType.includes('application/json')) {
+      return response.json();
+    } else {
+      return response.text();
+    }
+  });
 }
 
 function apiCallText(url, method, body = null) {
@@ -69,12 +63,14 @@ function apiCallText(url, method, body = null) {
         headers: headers,
         body: body ? JSON.stringify(body) : undefined
     })
-    .then(response => response.text());
+    .then(response => {
+        return response.text();
+    });
 }
 
 function getSessionId() {
     const url = `${liveAgentEndpoint}System/SessionId`;
-    apiCall(url, 'GET')
+    apiCall(url,'GET')
         .then(data => {
             affinityToken = data.affinityToken;
             sessionId = data.id;
@@ -119,7 +115,7 @@ function initiateChat() {
                     messages: [
                         {
                             type: "Bot",
-                            text: "Hi! I'm your Health Assistant...\nWhat can I help you with today?",
+                            text: "Hi! I'm your Health Assistant.\n\nI'm great at getting you to the right Teladoc service to suit your needs, answering billing and service questions, and taking feedback about your experience. If this is an emergency, please go to your nearest emergency room or call 911.\n\nWhat can I help you with today?",
                             name: "Assistant Bot",
                             time: "2025-01-22 07:34:32 -0600"
                         },
@@ -143,7 +139,7 @@ function initiateChat() {
                         },
                         {
                             type: "Bot",
-                            text: "I understand you want to talk to a person...\nCan you tell me about the nature of your request?",
+                            text: "I understand you want to talk to a person. However, I can also help you with getting you to the right service or FAQ page and save you time.\nCan you tell me about the nature of your request?",
                             name: "Assistant Bot",
                             time: "2025-01-22 07:35:01 -0600"
                         },
@@ -182,6 +178,7 @@ function initiateChat() {
 
     apiCallText(chatInitUrl, 'POST', chatInitData)
         .then(response => {
+            sequence++;
             console.log('Resultado de initiateChat:', response);
         })
         .catch(error => console.error('Error al iniciar chat:', error));
@@ -189,8 +186,9 @@ function initiateChat() {
 
 function sendMessageSF(message) {
     const chatMessageUrl = `${liveAgentEndpoint}Chasitor/ChatMessage`;
-    apiCallText(chatMessageUrl, 'POST', { text: message })
+    apiCallText(chatMessageUrl, 'POST', {text: message})
         .then(response => {
+            sequence++;
             console.log('Resultado de mensaje:', response);
         })
         .catch(error => console.error('Error al enviar mensaje:', error));
@@ -198,13 +196,13 @@ function sendMessageSF(message) {
 
 function sendCustomEvent() {
     const customEventUrl = `${liveAgentEndpoint}Chasitor/CustomEvent`;
-    // Asegúrate de enviar data en formato string (ya lo tienes '[3,4]')
     const customEventData = {
         type: "Attachment",
-        data: '[3,4]'
+        data: "[3,4]"
     };
     apiCallText(customEventUrl, 'POST', customEventData)
         .then(response => {
+            sequence++;
             console.log('Custom event enviado:', response);
         })
         .catch(error => console.error('Error al enviar custom event:', error));
@@ -213,12 +211,12 @@ function sendCustomEvent() {
 async function receiveSFMessages(){
     await sleep(5000);
     const url = `${liveAgentEndpoint}System/Messages`;
-    apiCall(url, 'GET')
+    apiCall(url,'GET')
         .then(data => {
             console.log('Resultado de mensaje:', data);
-            if (data && data.messages && data.messages.length > 0) {
+            if(data && data.messages && data.messages.length > 0){
                 data.messages.forEach(element => {
-                    if (element.type === "ChatMessage" && element.message.text !== "") {
+                    if(element.type === "ChatMessage" && element.message.text !== ""){
                         createSFChatMessage(element.message.text);
                     }
                 });
@@ -230,8 +228,9 @@ async function receiveSFMessages(){
 
 function exitChat(){ 
     const chatEndUrl = `${liveAgentEndpoint}Chasitor/ChatEnd`;
-    apiCallText(chatEndUrl, 'POST', { reason: "client" })
+    apiCallText(chatEndUrl, 'POST', {reason: "client"})
         .then(response => {
+            sequence++;
             console.log('Resultado de cerrarChat:', response);
         })
         .catch(error => console.error('Error al cerrar chat:', error));
@@ -242,7 +241,7 @@ function sleep(ms) {
 }
 
 const prechatValue = {
-    messages: [
+    messages : [
         {
             type: "Bot",
             text: "Hello World",
