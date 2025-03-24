@@ -201,10 +201,7 @@ function sendCustomEvent() {
     // Probar con un formato que coincida con el esperado por el lightning:conversationCustomEvent
     const customEventData = {
         type: "Attachment", // Mantener el mismo tipo
-        data: JSON.stringify({
-            attachmentIds: [3, 4],
-            description: "Test attachment data"
-        })
+        data: "TEST"
     };
     
     console.log('Enviando evento personalizado:', JSON.stringify(customEventData));
