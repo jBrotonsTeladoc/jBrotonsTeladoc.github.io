@@ -1,13 +1,13 @@
-const liveAgentEndpoint = 'https://d.la12s-core1.sfdc-8tgtt5.salesforceliveagent.com/chat/rest/'; // Reemplaza con tu endpoint
-const liveAgentVersion = '60'; // La versión de la API de Live Agent
-const nameVisitor = 'Alexander Gimenez'; // Nombre del visitante
+const liveAgentEndpoint = 'https://d.la12s-core1.sfdc-8tgtt5.salesforceliveagent.com/chat/rest/';
+const liveAgentVersion = '60';
+const nameVisitor = 'Alexander Gimenez';
 let sequence = 1;
 let affinityToken = null;
 let sessionId = null;
 let sessionKey = null;
 
+// Iniciar el proceso
 getSessionId();
-receiveSFMessages();
 
 function newMessageInChat(classMessage, message){
     var chatBox = document.getElementById("chatBox");
@@ -20,9 +20,18 @@ function newMessageInChat(classMessage, message){
 function sendMessage() {
     var message = document.getElementById("userMessage").value;
     newMessageInChat("message", message);
-    sendMessageSF(message);
-    // Enviar custom event después de enviar el mensaje
-    sendCustomEvent();
+    
+    // Usar promesas para asegurar el orden correcto de operaciones
+    sendMessageSF(message)
+        .then(() => {
+            // Sólo enviar el evento personalizado después de que el mensaje se haya enviado
+            // y la secuencia se haya incrementado correctamente
+            return sendCustomEvent();
+        })
+        .catch(error => {
+            console.error('Error en el proceso de envío:', error);
+        });
+    
     document.getElementById("userMessage").value = "";
 }
 
@@ -31,33 +40,38 @@ function createSFChatMessage(message){
 }
 
 function createHeaders() {
+    // Crear headers con los valores actuales
     return {
         'X-LIVEAGENT-API-VERSION': liveAgentVersion,
         'X-LIVEAGENT-AFFINITY': affinityToken || 'null',
         'X-LIVEAGENT-SESSION-KEY': sessionKey,
-        'X-LIVEAGENT-SEQUENCE': sequence
+        'X-LIVEAGENT-SEQUENCE': sequence.toString() // Asegurar que sea string
     };
 }
 
 function apiCall(url, method, body = null) {
-  const headers = createHeaders();
-  return fetch(url, {
-    method: method,
-    headers: headers,
-    body: body ? JSON.stringify(body) : undefined
-  })
-  .then(response => {
-    const contentType = response.headers.get('Content-Type');
-    if (contentType && contentType.includes('application/json')) {
-      return response.json();
-    } else {
-      return response.text();
-    }
-  });
+    console.log(`Realizando llamada API a ${url} con secuencia ${sequence}`);
+    const headers = createHeaders();
+    
+    return fetch(url, {
+        method: method,
+        headers: headers,
+        body: body ? JSON.stringify(body) : undefined
+    })
+    .then(response => {
+        const contentType = response.headers.get('Content-Type');
+        if (contentType && contentType.includes('application/json')) {
+            return response.json();
+        } else {
+            return response.text();
+        }
+    });
 }
 
 function apiCallText(url, method, body = null) {
+    console.log(`Realizando llamada API TEXT a ${url} con secuencia ${sequence}`);
     const headers = createHeaders();
+    
     return fetch(url, {
         method: method,
         headers: headers,
@@ -70,12 +84,15 @@ function apiCallText(url, method, body = null) {
 
 function getSessionId() {
     const url = `${liveAgentEndpoint}System/SessionId`;
-    apiCall(url,'GET')
+    apiCall(url, 'GET')
         .then(data => {
             affinityToken = data.affinityToken;
             sessionId = data.id;
             sessionKey = data.key;
             console.log('Resultado de getSessionId:', data);
+            
+            // No incrementamos sequence aquí ya que es la llamada inicial
+            
             initiateChat();
         })
         .catch(error => console.error('Error al obtener el ID de sesión:', error));
@@ -178,83 +195,106 @@ function initiateChat() {
 
     apiCallText(chatInitUrl, 'POST', chatInitData)
         .then(response => {
-            sequence++;
+            sequence++; // Incrementar sequence después de la llamada exitosa
             console.log('Resultado de initiateChat:', response);
+            
+            // Iniciar el polling de mensajes después de inicializar el chat
+            receiveSFMessages();
         })
         .catch(error => console.error('Error al iniciar chat:', error));
 }
 
 function sendMessageSF(message) {
     const chatMessageUrl = `${liveAgentEndpoint}Chasitor/ChatMessage`;
-    apiCallText(chatMessageUrl, 'POST', {text: message})
+    
+    return apiCallText(chatMessageUrl, 'POST', {text: message})
         .then(response => {
-            sequence++;
+            sequence++; // Incrementar sequence después de la llamada exitosa
             console.log('Resultado de mensaje:', response);
-        })
-        .catch(error => console.error('Error al enviar mensaje:', error));
-}
-
-function sendCustomEvent() {
-    // Usar el mismo tipo de evento que está configurado en tu handler de Aura
-    const customEventUrl = `${liveAgentEndpoint}Chasitor/CustomEvent`;
-    
-    // Probar con un formato que coincida con el esperado por el lightning:conversationCustomEvent
-    const customEventData = {
-        type: "Attachment", // Mantener el mismo tipo
-        data: "TEST"
-    };
-    
-    console.log('Enviando evento personalizado:', JSON.stringify(customEventData));
-    
-    apiCallText(customEventUrl, 'POST', customEventData)
-        .then(response => {
-            sequence++;
-            console.log('Respuesta del evento personalizado:', response);
-            
-            // Esperar unos segundos y verificar si el evento ha sido procesado
-            setTimeout(() => {
-                const messagesUrl = `${liveAgentEndpoint}System/Messages`;
-                apiCall(messagesUrl, 'GET')
-                    .then(data => {
-                        console.log('Verificando mensajes después del evento personalizado:', data);
-                        // Buscar específicamente eventos personalizados en la respuesta
-                        if (data && data.customEvents && data.customEvents.length > 0) {
-                            console.log('Eventos personalizados encontrados:', data.customEvents);
-                        } else {
-                            console.log('No se encontraron eventos personalizados en la respuesta');
-                        }
-                    })
-                    .catch(err => console.error('Error al verificar mensajes:', err));
-            }, 3000);
+            return response; // Devolver la respuesta para encadenar promesas
         })
         .catch(error => {
-            console.error('Error al enviar custom event:', error);
+            console.error('Error al enviar mensaje:', error);
+            throw error; // Re-lanzar el error para manejo adecuado
         });
 }
 
-async function receiveSFMessages(){
+function sendCustomEvent() {
+    const customEventUrl = `${liveAgentEndpoint}Chasitor/CustomEvent`;
+    
+    // Probar con distintos formatos
+    const customEventData = {
+        type: "Attachment",
+        data: "TEST_ATTACHMENT_DATA" // String simple y claro
+    };
+    
+    console.log('Enviando evento personalizado:', JSON.stringify(customEventData), 'Secuencia actual:', sequence);
+    
+    return apiCallText(customEventUrl, 'POST', customEventData)
+        .then(response => {
+            sequence++; // Incrementar sequence después de la llamada exitosa
+            console.log('Respuesta del evento personalizado:', response);
+            
+            // Verificar el evento después de un breve retraso
+            setTimeout(checkCustomEvent, 3000);
+            
+            return response;
+        })
+        .catch(error => {
+            console.error('Error al enviar custom event:', error);
+            throw error;
+        });
+}
+
+function checkCustomEvent() {
+    const messagesUrl = `${liveAgentEndpoint}System/Messages`;
+    apiCall(messagesUrl, 'GET')
+        .then(data => {
+            console.log('Verificando mensajes después del evento personalizado:', data);
+            // Buscar específicamente eventos personalizados en la respuesta
+            if (data && data.customEvents && data.customEvents.length > 0) {
+                console.log('✅ Eventos personalizados encontrados:', data.customEvents);
+            } else {
+                console.log('❌ No se encontraron eventos personalizados en la respuesta');
+            }
+        })
+        .catch(err => console.error('Error al verificar mensajes:', err));
+}
+
+async function receiveSFMessages() {
     await sleep(5000);
     const url = `${liveAgentEndpoint}System/Messages`;
-    apiCall(url,'GET')
+    
+    // Para el polling NO incrementamos sequence
+    apiCall(url, 'GET')
         .then(data => {
             console.log('Resultado de mensaje:', data);
-            if(data && data.messages && data.messages.length > 0){
+            if (data && data.messages && data.messages.length > 0) {
                 data.messages.forEach(element => {
-                    if(element.type === "ChatMessage" && element.message.text !== ""){
+                    if (element.type === "ChatMessage" && element.message.text !== "") {
                         createSFChatMessage(element.message.text);
                     }
                 });
             }
+            // Verificar si hay eventos personalizados
+            if (data && data.customEvents && data.customEvents.length > 0) {
+                console.log('✅ Eventos personalizados recibidos:', data.customEvents);
+            }
+            // Programar la próxima verificación
             receiveSFMessages();
         })
-        .catch(error => console.error('Error al obtener mensaje de sesión:', error));
+        .catch(error => {
+            console.error('Error al obtener mensaje de sesión:', error);
+            // Intentar nuevamente después de un tiempo
+            setTimeout(receiveSFMessages, 5000);
+        });
 }
 
-function exitChat(){ 
+function exitChat() { 
     const chatEndUrl = `${liveAgentEndpoint}Chasitor/ChatEnd`;
     apiCallText(chatEndUrl, 'POST', {reason: "client"})
         .then(response => {
-            sequence++;
+            sequence++; // Incrementar sequence después de la llamada exitosa
             console.log('Resultado de cerrarChat:', response);
         })
         .catch(error => console.error('Error al cerrar chat:', error));
@@ -264,6 +304,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// Datos de prueba
 const prechatValue = {
     messages : [
         {
