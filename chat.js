@@ -196,16 +196,37 @@ function sendMessageSF(message) {
 
 function sendCustomEvent() {
     const customEventUrl = `${liveAgentEndpoint}Chasitor/CustomEvent`;
+    
+    // Probar con un tipo más genérico
     const customEventData = {
-        type: "Attachment",
-        data: "[3,4]"
+        type: "CustomEvent",  // Cambiado a un nombre más genérico
+        data: "[3,4]"  // Mantener el formato string como indica la documentación
     };
+    
+    console.log('Enviando evento personalizado:', customEventData);
+    
     apiCallText(customEventUrl, 'POST', customEventData)
         .then(response => {
             sequence++;
-            console.log('Custom event enviado:', response);
+            console.log('Respuesta del evento personalizado:', response);
+            
+            // Intentar analizar la respuesta para ver si hay algún mensaje de error
+            if (response && response.trim() !== '') {
+                try {
+                    const parsedResponse = JSON.parse(response);
+                    console.log('Respuesta parseada:', parsedResponse);
+                } catch (e) {
+                    console.log('La respuesta no es JSON:', response);
+                }
+            }
         })
-        .catch(error => console.error('Error al enviar custom event:', error));
+        .catch(error => {
+            console.error('Error al enviar custom event:', error);
+            // Mostrar detalles adicionales del error si están disponibles
+            if (error.response) {
+                console.error('Detalles de la respuesta:', error.response);
+            }
+        });
 }
 
 async function receiveSFMessages(){
