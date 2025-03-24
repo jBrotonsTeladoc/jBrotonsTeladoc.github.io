@@ -195,37 +195,43 @@ function sendMessageSF(message) {
 }
 
 function sendCustomEvent() {
+    // Usar el mismo tipo de evento que está configurado en tu handler de Aura
     const customEventUrl = `${liveAgentEndpoint}Chasitor/CustomEvent`;
     
-    // Probar con un tipo más genérico
+    // Probar con un formato que coincida con el esperado por el lightning:conversationCustomEvent
     const customEventData = {
-        type: "CustomEvent",  // Cambiado a un nombre más genérico
-        data: "[3,4]"  // Mantener el formato string como indica la documentación
+        type: "Attachment", // Mantener el mismo tipo
+        data: JSON.stringify({
+            attachmentIds: [3, 4],
+            description: "Test attachment data"
+        })
     };
     
-    console.log('Enviando evento personalizado:', customEventData);
+    console.log('Enviando evento personalizado:', JSON.stringify(customEventData));
     
     apiCallText(customEventUrl, 'POST', customEventData)
         .then(response => {
             sequence++;
             console.log('Respuesta del evento personalizado:', response);
             
-            // Intentar analizar la respuesta para ver si hay algún mensaje de error
-            if (response && response.trim() !== '') {
-                try {
-                    const parsedResponse = JSON.parse(response);
-                    console.log('Respuesta parseada:', parsedResponse);
-                } catch (e) {
-                    console.log('La respuesta no es JSON:', response);
-                }
-            }
+            // Esperar unos segundos y verificar si el evento ha sido procesado
+            setTimeout(() => {
+                const messagesUrl = `${liveAgentEndpoint}System/Messages`;
+                apiCall(messagesUrl, 'GET')
+                    .then(data => {
+                        console.log('Verificando mensajes después del evento personalizado:', data);
+                        // Buscar específicamente eventos personalizados en la respuesta
+                        if (data && data.customEvents && data.customEvents.length > 0) {
+                            console.log('Eventos personalizados encontrados:', data.customEvents);
+                        } else {
+                            console.log('No se encontraron eventos personalizados en la respuesta');
+                        }
+                    })
+                    .catch(err => console.error('Error al verificar mensajes:', err));
+            }, 3000);
         })
         .catch(error => {
             console.error('Error al enviar custom event:', error);
-            // Mostrar detalles adicionales del error si están disponibles
-            if (error.response) {
-                console.error('Detalles de la respuesta:', error.response);
-            }
         });
 }
 
