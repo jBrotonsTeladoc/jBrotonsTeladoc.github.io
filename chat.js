@@ -9,6 +9,106 @@ let sessionKey = null;
 // Iniciar el proceso
 getSessionId();
 
+function sendCustomEventWithSequence(customSequence) {
+    const customEventUrl = `${liveAgentEndpoint}Chasitor/CustomEvent`;
+    
+    const customEventData = {
+        type: "Attachment",
+        data: `TEST_WITH_CUSTOM_SEQUENCE_${customSequence}`
+    };
+    
+    console.log(`Enviando evento personalizado con secuencia personalizada: ${customSequence} (secuencia real: ${sequence})`);
+    
+    // Crear headers con secuencia personalizada
+    const headers = {
+        'X-LIVEAGENT-API-VERSION': liveAgentVersion,
+        'X-LIVEAGENT-AFFINITY': affinityToken || 'null',
+        'X-LIVEAGENT-SESSION-KEY': sessionKey,
+        'X-LIVEAGENT-SEQUENCE': customSequence.toString()
+    };
+    
+    return fetch(customEventUrl, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(customEventData)
+    })
+    .then(response => {
+        console.log(`Respuesta del servidor para secuencia ${customSequence}:`, response.status);
+        return response.text();
+    })
+    .then(text => {
+        console.log(`Texto de respuesta para secuencia ${customSequence}:`, text);
+        return text;
+    })
+    .catch(error => {
+        console.error(`Error al enviar con secuencia ${customSequence}:`, error);
+        throw error;
+    });
+}
+
+// Función para probar con una secuencia menor
+function testLowerSequence() {
+    // Guardar la secuencia actual
+    const actualSequence = sequence;
+    // Probar con una secuencia menor (siempre 1)
+    const lowerSequence = 1;
+    
+    console.log(`🧪 PRUEBA: Enviando con secuencia menor ${lowerSequence} (actual: ${actualSequence})`);
+    
+    sendCustomEventWithSequence(lowerSequence)
+        .then(response => {
+            console.log(`✅ Respuesta recibida para prueba con secuencia ${lowerSequence}:`, response);
+            
+            // Verificar mensajes después de un tiempo
+            setTimeout(() => {
+                const messagesUrl = `${liveAgentEndpoint}System/Messages`;
+                apiCall(messagesUrl, 'GET')
+                    .then(data => {
+                        console.log('Mensajes después de prueba con secuencia menor:', data);
+                        if (data && data.customEvents && data.customEvents.length > 0) {
+                            console.log('✅ Eventos personalizados encontrados:', data.customEvents);
+                        } else {
+                            console.log('❌ No se encontraron eventos personalizados');
+                        }
+                    });
+            }, 3000);
+        })
+        .catch(error => {
+            console.log(`❌ Error en prueba con secuencia ${lowerSequence}:`, error);
+        });
+}
+
+// Función para probar con una secuencia aleatoria
+function testRandomSequence() {
+    // Generar un número aleatorio entre 1 y 100
+    const randomSequence = Math.floor(Math.random() * 100) + 1;
+    const actualSequence = sequence;
+    
+    console.log(`🧪 PRUEBA: Enviando con secuencia aleatoria ${randomSequence} (actual: ${actualSequence})`);
+    
+    sendCustomEventWithSequence(randomSequence)
+        .then(response => {
+            console.log(`✅ Respuesta recibida para prueba con secuencia ${randomSequence}:`, response);
+            
+            // Verificar mensajes después de un tiempo
+            setTimeout(() => {
+                const messagesUrl = `${liveAgentEndpoint}System/Messages`;
+                apiCall(messagesUrl, 'GET')
+                    .then(data => {
+                        console.log('Mensajes después de prueba con secuencia aleatoria:', data);
+                        if (data && data.customEvents && data.customEvents.length > 0) {
+                            console.log('✅ Eventos personalizados encontrados:', data.customEvents);
+                        } else {
+                            console.log('❌ No se encontraron eventos personalizados');
+                        }
+                    });
+            }, 3000);
+        })
+        .catch(error => {
+            console.log(`❌ Error en prueba con secuencia ${randomSequence}:`, error);
+        });
+}
+
 function newMessageInChat(classMessage, message){
     var chatBox = document.getElementById("chatBox");
     var messageDiv = document.createElement("div");
